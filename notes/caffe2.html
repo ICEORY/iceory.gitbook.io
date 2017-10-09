@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Network Quantization · GitBook</title>
+        <title>Install Caffe2 on Windows · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -69,10 +69,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Incremental Network Quantization.html" />
+    <link rel="next" href="markdown.html" />
     
     
-    <link rel="prev" href="../" />
+    <link rel="prev" href="gitbook.html" />
     
 
     </head>
@@ -114,9 +114,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2" data-path="Introduction.html">
+        <li class="chapter " data-level="1.2" data-path="../Network Quantization/Introduction.html">
             
-                <a href="Introduction.html">
+                <a href="../Network Quantization/Introduction.html">
             
                     
                     Network Quantization
@@ -128,9 +128,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.2.1" data-path="Incremental Network Quantization.html">
+        <li class="chapter " data-level="1.2.1" data-path="../Network Quantization/Incremental Network Quantization.html">
             
-                <a href="Incremental Network Quantization.html">
+                <a href="../Network Quantization/Incremental Network Quantization.html">
             
                     
                     Incremental Network Quantization
@@ -141,9 +141,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.2" data-path="Dynamic Network Surgery.html">
+        <li class="chapter " data-level="1.2.2" data-path="../Network Quantization/Dynamic Network Surgery.html">
             
-                <a href="Dynamic Network Surgery.html">
+                <a href="../Network Quantization/Dynamic Network Surgery.html">
             
                     
                     Dynamic Network Surgery
@@ -154,9 +154,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.3" data-path="Binary Weight Networks.html">
+        <li class="chapter " data-level="1.2.3" data-path="../Network Quantization/Binary Weight Networks.html">
             
-                <a href="Binary Weight Networks.html">
+                <a href="../Network Quantization/Binary Weight Networks.html">
             
                     
                     Binary Weight Networks
@@ -167,9 +167,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.4" data-path="Ternary Weight Networks.html">
+        <li class="chapter " data-level="1.2.4" data-path="../Network Quantization/Ternary Weight Networks.html">
             
-                <a href="Ternary Weight Networks.html">
+                <a href="../Network Quantization/Ternary Weight Networks.html">
             
                     
                     Ternary Weight Networks
@@ -180,9 +180,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.5" data-path="Trained Ternary Quantization.html">
+        <li class="chapter " data-level="1.2.5" data-path="../Network Quantization/Trained Ternary Quantization.html">
             
-                <a href="Trained Ternary Quantization.html">
+                <a href="../Network Quantization/Trained Ternary Quantization.html">
             
                     
                     Trained Ternary Quantization
@@ -193,9 +193,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.6" data-path="Binarized Neural Networks.html">
+        <li class="chapter " data-level="1.2.6" data-path="../Network Quantization/Binarized Neural Networks.html">
             
-                <a href="Binarized Neural Networks.html">
+                <a href="../Network Quantization/Binarized Neural Networks.html">
             
                     
                     Binarized Neural Networks
@@ -206,9 +206,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.7" data-path="Deep Compression.html">
+        <li class="chapter " data-level="1.2.7" data-path="../Network Quantization/Deep Compression.html">
             
-                <a href="Deep Compression.html">
+                <a href="../Network Quantization/Deep Compression.html">
             
                     
                     Deep Compression
@@ -238,9 +238,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="../notes/gitbook.html">
+        <li class="chapter " data-level="1.3.1" data-path="gitbook.html">
             
-                <a href="../notes/gitbook.html">
+                <a href="gitbook.html">
             
                     
                     Install and Use Gitbook on Windows
@@ -251,9 +251,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="../notes/caffe2.html">
+        <li class="chapter active" data-level="1.3.2" data-path="caffe2.html">
             
-                <a href="../notes/caffe2.html">
+                <a href="caffe2.html">
             
                     
                     Install Caffe2 on Windows
@@ -264,9 +264,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="../notes/markdown.html">
+        <li class="chapter " data-level="1.3.3" data-path="markdown.html">
             
-                <a href="../notes/markdown.html">
+                <a href="markdown.html">
             
                     
                     Markdown Tutorial
@@ -312,7 +312,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Network Quantization</a>
+        <a href=".." >Install Caffe2 on Windows</a>
     </h1>
 </div>
 
@@ -327,21 +327,8 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <!-- toc --><div id="toc" class="toc">
+                                <h1 id="caffe2">Caffe2</h1>
 
-<h1 id="introduction">Introduction</h1>
-<hr>
-<p>Deep convolutional neural networks (DCNN) have achieved great performance on computer vision tasks, including  image classification, object detection and image segmentation. However, it is difficult to deploy deep learning (DL) methods in mobile devices, as deep neural networks always need high computational resource and large storage. Recent studies on adopting DL to hardware mainly focus on two folds: the first one is to design lighter architecture with comparable performance (i.e.  <a href="https://arxiv.org/abs/1602.07360" target="_blank">SqueezeNet of Han et.al.</a> ) ; the second fold is network quantization, which aims to compress models and speed up computation of DCNN by converting high precision data to low precision version. Other coding methods including Huffman Coding, Compressed Sparse Column (CSC) and Hashing Coding also help reducing size of models. </p>
-<p>In this paper, we try to compare several quantization and compression methods as shown in follows:</p>
-<ul>
-<li><a href="https://arxiv.org/abs/1702.03044" target="_blank">Incremental network quantization</a> (INQ), a lossless quantization method with incremental idea. Combined with dynamic network surgery (DNS), the authors compressed AlexNet for 53<script type="math/tex; ">\times</script> without accuracy loss</li>
-<li><a href="https://arxiv.org/abs/1603.05279" target="_blank">Binary weights network</a> (BWN) and XNOR-Net</li>
-<li><a href="https://arxiv.org/abs/1605.04711" target="_blank">Ternary weights network</a> (TWN)</li>
-<li><a href="https://arxiv.org/abs/1602.02830" target="_blank">Binarized neural networks</a> (BNN)</li>
-<li><a href="https://arxiv.org/abs/1612.01064" target="_blank">Trained ternary quantization</a> (TTQ)</li>
-<li><a href="https://arxiv.org/abs/1510.00149" target="_blank">Deep compression</a> with network quantization, pruning and Huffman code</li>
-</ul>
-</div>
                                 
                                 </section>
                             
@@ -368,12 +355,12 @@
 
             
                 
-                <a href="../" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                <a href="gitbook.html" class="navigation navigation-prev " aria-label="Previous page: Install and Use Gitbook on Windows">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="Incremental Network Quantization.html" class="navigation navigation-next " aria-label="Next page: Incremental Network Quantization">
+                <a href="markdown.html" class="navigation navigation-next " aria-label="Next page: Markdown Tutorial">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -384,7 +371,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Network Quantization","level":"1.2","depth":1,"next":{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"path":"Network Quantization/Incremental Network Quantization.md","ref":"Network Quantization/Incremental Network Quantization.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Introduction.md","mtime":"2017-06-21T13:08:55.890Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-09T14:25:04.614Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Install Caffe2 on Windows","level":"1.3.2","depth":2,"next":{"title":"Markdown Tutorial","level":"1.3.3","depth":2,"path":"notes/markdown.md","ref":"notes/markdown.md","articles":[]},"previous":{"title":"Install and Use Gitbook on Windows","level":"1.3.1","depth":2,"path":"notes/gitbook.md","ref":"notes/gitbook.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"notes/caffe2.md","mtime":"2017-10-09T08:07:06.437Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-09T14:25:04.614Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
