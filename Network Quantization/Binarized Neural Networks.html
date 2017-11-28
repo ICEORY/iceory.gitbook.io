@@ -251,7 +251,33 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="../notes/caffe2.html">
+        <li class="chapter " data-level="1.3.2" data-path="../notes/softmaxloss.html">
+            
+                <a href="../notes/softmaxloss.html">
+            
+                    
+                    Softmax Loss with Symbolic Differentiation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../notes/pytorch_autograd.html">
+            
+                <a href="../notes/pytorch_autograd.html">
+            
+                    
+                    PyTorch and Automatic Differentiation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../notes/caffe2.html">
             
                 <a href="../notes/caffe2.html">
             
@@ -264,12 +290,64 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.3" data-path="../notes/markdown.html">
+        <li class="chapter " data-level="1.3.5" data-path="../notes/markdown.html">
             
                 <a href="../notes/markdown.html">
             
                     
                     Markdown Tutorial
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" data-path="../notes/vscode.html">
+            
+                <a href="../notes/vscode.html">
+            
+                    
+                    VSCode
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.7" data-path="../notes/auxnet.html">
+            
+                <a href="../notes/auxnet.html">
+            
+                    
+                    Re-implementation of AuxNet
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.8" data-path="../notes/git.html">
+            
+                <a href="../notes/git.html">
+            
+                    
+                    Git
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.9" data-path="../notes/git.html">
+            
+                <a href="../notes/git.html">
+            
+                    
+                    Power Point
             
                 </a>
             
@@ -357,21 +435,22 @@ x^b = sign(x)=
 \begin{cases}
 +1 & if ~x\ge 0 \\
 -1 & otherwise,
-\end{cases} \tag{1}
-</script>
-The stochastic binarization function is:
-<script type="math/tex; mode=display">
+\end{cases} 
+\tag{1}
+</script></p>
+<p>The stochastic binarization function is:</p>
+<p><script type="math/tex; mode=display">
 x^b = 
 \begin{cases}
 +1, & \mathrm{with~probability}~p=\sigma(x) \\
 -1, & \mathrm{with~probability}~1-p,
 \end{cases} \tag{2}
-</script>
-where <script type="math/tex; ">\sigma</script> is the &quot;<em>hard sigmoid</em>&quot; function:
-<script type="math/tex; mode=display">
+</script></p>
+<p>where <script type="math/tex; ">\sigma</script> is the &quot;<em>hard sigmoid</em>&quot; function:</p>
+<p><script type="math/tex; mode=display">
 \sigma(x) = clip(\frac{x+1}{2},0,1) = \max(0,\min(1,\frac{x+1}{2})) \tag{3}
-</script>
-The authors suggested that the stochastic binarization is harder to implement as it requires the hardware to generate random bits, though it is more appealing than the deterministic binarization, so they preferred to use the deterministic binarization function in their experiments.</p>
+</script></p>
+<p>The authors suggested that the stochastic binarization is harder to implement as it requires the hardware to generate random bits, though it is more appealing than the deterministic binarization, so they preferred to use the deterministic binarization function in their experiments.</p>
 <h3 id="gradient">Gradient</h3>
 <p>Real-valued gradients are computed and accumulated in real-valued variables in this paper, as high precision is required for SGD. Previous work shows that using &quot;straight-through estimator&quot; can help the network training faster, the authors used straight-through estimator of <script type="math/tex; ">\frac{\partial C}{\partial r}</script> simplified as:
 <script type="math/tex; mode=display">
@@ -545,7 +624,7 @@ O_l = W_l \cdot A_{l-1} \approx \sum_{i=1}^m (\alpha_{l-1,i}xnor-popcnt(B_l, H_{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"next":{"title":"Deep Compression","level":"1.2.7","depth":2,"path":"Network Quantization/Deep Compression.md","ref":"Network Quantization/Deep Compression.md","articles":[]},"previous":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Binarized Neural Networks.md","mtime":"2017-06-21T16:07:44.803Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-10-09T14:56:58.207Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"next":{"title":"Deep Compression","level":"1.2.7","depth":2,"path":"Network Quantization/Deep Compression.md","ref":"Network Quantization/Deep Compression.md","articles":[]},"previous":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Binarized Neural Networks.md","mtime":"2017-10-15T03:42:42.906Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-11-28T07:10:47.366Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

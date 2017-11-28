@@ -12,9 +12,13 @@ x^b = sign(x)=
 \begin{cases}
 +1 & if ~x\ge 0 \\
 -1 & otherwise,
-\end{cases} \tag{1}
+\end{cases} 
+\tag{1}
 $$
+
+
 The stochastic binarization function is:
+
 $$
 x^b = 
 \begin{cases}
@@ -22,10 +26,13 @@ x^b =
 -1, & \mathrm{with~probability}~1-p,
 \end{cases} \tag{2}
 $$
+
 where $$\sigma$$ is the "*hard sigmoid*" function:
+
 $$
 \sigma(x) = clip(\frac{x+1}{2},0,1) = \max(0,\min(1,\frac{x+1}{2})) \tag{3}
 $$
+
 The authors suggested that the stochastic binarization is harder to implement as it requires the hardware to generate random bits, though it is more appealing than the deterministic binarization, so they preferred to use the deterministic binarization function in their experiments.
 
 ### Gradient
