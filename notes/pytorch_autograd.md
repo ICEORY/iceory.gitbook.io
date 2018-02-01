@@ -36,15 +36,15 @@ $$
 
 以 $f(x_1,x_2)={\rm ln}(x_1)+x_1x_2-{\rm sin}(x_2)$ 的求导为例子。其计算过程可以由下图表示。
 
-![AD_flow](.\fig\AD_01.PNG)
+![AD_flow](./fig/AD_01.PNG)
 
 前向模式求解过程：
 
-![AD_flow](.\fig\AD_02.PNG)
+![AD_flow](./fig/AD_02.PNG)
 
 反向模式求解过程：
 
-![AD_flow](.\fig\AD_03.PNG)
+![AD_flow](./fig/AD_03.PNG)
 
 ## PyTorch 自动求导
 在PyTorch中的自动求导是tape-based autograd，换句话说是基于类似反向模式的自动求导。通过动态的构建运算图，然后反向传播对各个成分进行求导。在PyTorch中，基本的元操作的求导过程已经写好在程序中，如：

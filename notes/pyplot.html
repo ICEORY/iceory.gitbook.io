@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Markdown Tutorial · GitBook</title>
+        <title>PyPlot · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -69,10 +69,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="vscode.html" />
     
-    
-    <link rel="prev" href="caffe2.html" />
+    <link rel="prev" href="git.html" />
     
 
     </head>
@@ -290,7 +288,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.5" data-path="markdown.html">
+        <li class="chapter " data-level="1.3.5" data-path="markdown.html">
             
                 <a href="markdown.html">
             
@@ -355,7 +353,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.10" data-path="pyplot.html">
+        <li class="chapter active" data-level="1.3.10" data-path="pyplot.html">
             
                 <a href="pyplot.html">
             
@@ -403,7 +401,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Markdown Tutorial</a>
+        <a href=".." >PyPlot</a>
     </h1>
 </div>
 
@@ -418,93 +416,16 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="markdown">markdown</h1>
-<!-- toc --><div id="toc" class="toc">
-
-<ul>
-<li><a href="#markdown-&#x57FA;&#x672C;&#x6559;&#x7A0B;">markdown &#x57FA;&#x672C;&#x6559;&#x7A0B;</a></li>
-<li><a href="#markdown-mermaid">markdown mermaid</a><ul>
-<li><a href="#&#x5176;&#x4ED6;&#x57FA;&#x672C;&#x8BED;&#x6CD5;&#xFF1A;">&#x5176;&#x4ED6;&#x57FA;&#x672C;&#x8BED;&#x6CD5;&#xFF1A;</a><ul>
-<li><a href="#&#x5F62;&#x72B6;">&#x5F62;&#x72B6;</a></li>
-<li><a href="#&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;">&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#markdown-latex">markdown latex</a></li>
-</ul>
-
-</div><!-- tocstop -->
-<hr>
-<h2 id="markdown-&#x57FA;&#x672C;&#x6559;&#x7A0B;">markdown &#x57FA;&#x672C;&#x6559;&#x7A0B;</h2>
-<p>&#x53C2;&#x8003; [1]&#xFF1A;<a href="http://itmyhome.com/markdown/article/extension/task-list.html" target="_blank">http://itmyhome.com/markdown/article/extension/task-list.html</a></p>
-<p>&#x4E3B;&#x8981;&#x5305;&#x62EC; markdown &#x7684;&#x57FA;&#x672C;&#x8BED;&#x6CD5;&#x3001;&#x6269;&#x5C55;&#x8BED;&#x6CD5;&#x3001;&#x7F16;&#x8F91;&#x5668;&#x4EE5;&#x53CA;&#x6269;&#x5C55;&#x3001;&#x683C;&#x5F0F;&#x8F6C;&#x6362;&#x7B49;&#x65B9;&#x9762;&#x7684;&#x5185;&#x5BB9;&#xFF1B;</p>
-<h2 id="markdown-mermaid">markdown mermaid</h2>
-<p>&#x53C2;&#x8003; [1] <a href="https://mermaidjs.github.io/flowchart.html" target="_blank">https://mermaidjs.github.io/flowchart.html</a></p>
-<p>mermaid &#x662F; markdown &#x4E2D;&#x7528;&#x4E8E;&#x753B;&#x56FE;&#x7684;&#x5DE5;&#x5177;&#xFF0C;&#x57FA;&#x672C;&#x8BED;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-mermaid">graph TD
-start--&gt;stop
+                                <h1 id="pyplot-&#x7ED8;&#x56FE;&#x7B14;&#x8BB0;">PyPlot &#x7ED8;&#x56FE;&#x7B14;&#x8BB0;</h1>
+<h2 id="&#x6539;&#x53D8;&#x5B57;&#x4F53;&#x7C7B;&#x578B;">&#x6539;&#x53D8;&#x5B57;&#x4F53;&#x7C7B;&#x578B;</h2>
+<p>reference: <a href="http://blog.csdn.net/ginynu/article/details/70808962" target="_blank">http://blog.csdn.net/ginynu/article/details/70808962</a></p>
+<pre><code class="lang-python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt  
+plt.rc(<span class="hljs-string">&apos;font&apos;</span>,family=<span class="hljs-string">&apos;Times New Roman&apos;</span>)
 </code></pre>
-<pre><code class="lang-mermaid">graph LR
-start--&gt;stop
+<h2 id="&#x81EA;&#x52A8;&#x8C03;&#x6574;&#x8FB9;&#x754C;&#x8303;&#x56F4;">&#x81EA;&#x52A8;&#x8C03;&#x6574;&#x8FB9;&#x754C;&#x8303;&#x56F4;</h2>
+<p>reference: <a href="https://stackoverflow.com/questions/4042192/reduce-left-and-right-margins-in-matplotlib-plot" target="_blank">https://stackoverflow.com/questions/4042192/reduce-left-and-right-margins-in-matplotlib-plot</a></p>
+<pre><code class="lang-python">plt.tight_layout()
 </code></pre>
-<p>&#x5176;&#x4E2D; graph TD &#x8868;&#x793A;&#x753B;&#x56FE;&#x7684;&#x65B9;&#x5411;&#xFF0C;&#x8868;&#x793A;&#x65B9;&#x5411;&#x7684;&#x8BED;&#x6CD5;&#xFF1A;</p>
-<ul>
-<li>TB - top bottom</li>
-<li>BT - bottom top</li>
-<li>RL - right left</li>
-<li>LR - left right</li>
-<li>TD - same as TB</li>
-</ul>
-<h3 id="&#x5176;&#x4ED6;&#x57FA;&#x672C;&#x8BED;&#x6CD5;&#xFF1A;">&#x5176;&#x4ED6;&#x57FA;&#x672C;&#x8BED;&#x6CD5;&#xFF1A;</h3>
-<h4 id="&#x5F62;&#x72B6;">&#x5F62;&#x72B6;</h4>
-<ol>
-<li><p>&#x5E26;&#x6587;&#x5B57;&#x7684;&#x8282;&#x70B9;</p>
-<pre><code class="lang-mermaid">graph LR
-id1[this is a node]
-</code></pre>
-</li>
-<li><p>&#x5E26;&#x5706;&#x89D2;&#x7684;&#x8282;&#x70B9;</p>
-<pre><code class="lang-mermaid">graph LR
-id1(this is a node with round edges)
-</code></pre>
-</li>
-<li><p>&#x5706;&#x5F62;&#x7684;&#x8282;&#x70B9;</p>
-<pre><code class="lang-mermaid">graph LR
-id1((this is a circle))
-</code></pre>
-</li>
-<li><p>&#x4E0D;&#x5BF9;&#x79F0;&#x5F62;&#x72B6;&#xFF1A;id1&gt;This is the text in the box]</p>
-</li>
-<li><p>&#x659C;&#x65B9;&#x5F62;&#xFF1A;id1{This is the text in the box}</p>
-</li>
-</ol>
-<h4 id="&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;">&#x8FDE;&#x63A5;&#x65B9;&#x5F0F;</h4>
-<ol>
-<li><p>&#x5B9E;&#x7EBF;&#x7BAD;&#x5934;&#xFF1A; A--&gt;B</p>
-</li>
-<li><p>&#x5B9E;&#x7EBF;&#x8FDE;&#x63A5;&#xFF1A; A --- B</p>
-</li>
-<li><p>&#x5E26;&#x6587;&#x5B57;&#x8FDE;&#x63A5;&#xFF1A; 
-A-- This is the text ---B &#x6216;&#x8005; A---|This is the text|B</p>
-</li>
-<li><p>&#x5E26;&#x6587;&#x5B57;&#x7BAD;&#x5934;&#x8FDE;&#x63A5;&#xFF1A;</p>
-</li>
-</ol>
-<p>A--&gt;|text|B</p>
-<p>A-- text --&gt;B</p>
-<ol>
-<li><p>&#x865A;&#x7EBF;&#x8FDE;&#x63A5;&#xFF1A; A-.-&gt;B;</p>
-</li>
-<li><p>&#x7C97;&#x7BAD;&#x5934;&#xFF1A; A ==&gt; B</p>
-</li>
-</ol>
-<h5 id="&#x5B50;&#x56FE;">&#x5B50;&#x56FE;</h5>
-<pre><code>subgraph title
-    graph definition
-end
-</code></pre><h2 id="markdown-latex">markdown latex</h2>
-<p>[1] <a href="https://www.zybuluo.com/fyywy520/note/82980" target="_blank">https://www.zybuluo.com/fyywy520/note/82980</a></p>
 
                                 
                                 </section>
@@ -532,14 +453,10 @@ end
 
             
                 
-                <a href="caffe2.html" class="navigation navigation-prev " aria-label="Previous page: Install Caffe2 on Windows">
+                <a href="git.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Power Point">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="vscode.html" class="navigation navigation-next " aria-label="Next page: VSCode">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -548,7 +465,7 @@ end
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Markdown Tutorial","level":"1.3.5","depth":2,"next":{"title":"VSCode","level":"1.3.6","depth":2,"path":"notes/vscode.md","ref":"notes/vscode.md","articles":[]},"previous":{"title":"Install Caffe2 on Windows","level":"1.3.4","depth":2,"path":"notes/caffe2.md","ref":"notes/caffe2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"notes/markdown.md","mtime":"2017-11-23T03:48:54.089Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-02-01T07:08:54.968Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"PyPlot","level":"1.3.10","depth":2,"previous":{"title":"Power Point","level":"1.3.9","depth":2,"path":"notes/git.md","ref":"notes/git.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"notes/pyplot.md","mtime":"2017-12-23T06:29:42.681Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-02-01T07:08:54.968Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
