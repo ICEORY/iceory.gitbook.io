@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Network Quantization · GitBook</title>
+        <title>Integer Arithmetic Only Inference · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.2">
@@ -69,10 +69,8 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="Incremental Network Quantization.html" />
     
-    
-    <link rel="prev" href="../" />
+    <link rel="prev" href="Deep Compression.html" />
     
 
     </head>
@@ -114,7 +112,7 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.2" data-path="Introduction.html">
+        <li class="chapter " data-level="1.2" data-path="Introduction.html">
             
                 <a href="Introduction.html">
             
@@ -219,7 +217,7 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.8" data-path="Integer Arithmetic Only Inference.html">
+        <li class="chapter active" data-level="1.2.8" data-path="Integer Arithmetic Only Inference.html">
             
                 <a href="Integer Arithmetic Only Inference.html">
             
@@ -416,7 +414,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Network Quantization</a>
+        <a href=".." >Integer Arithmetic Only Inference</a>
     </h1>
 </div>
 
@@ -431,21 +429,129 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <!-- toc --><div id="toc" class="toc">
+                                <h1 id="quantization-and-training-of-neural-networks-for-efficient-integer-arithmetic-only-inference">Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference</h1>
+<!-- toc --><div id="toc" class="toc">
 
-<h1 id="introduction">Introduction</h1>
-<hr>
-<p>Deep convolutional neural networks (DCNN) have achieved great performance on computer vision tasks, including  image classification, object detection and image segmentation. However, it is difficult to deploy deep learning (DL) methods in mobile devices, as deep neural networks always need high computational resource and large storage. Recent studies on adopting DL to hardware mainly focus on two folds: the first one is to design lighter architecture with comparable performance (i.e.  <a href="https://arxiv.org/abs/1602.07360" target="_blank">SqueezeNet of Han et.al.</a> ) ; the second fold is network quantization, which aims to compress models and speed up computation of DCNN by converting high precision data to low precision version. Other coding methods including Huffman Coding, Compressed Sparse Column (CSC) and Hashing Coding also help reducing size of models. </p>
-<p>Here, we try to compare several quantization and compression methods as shown in follows:</p>
 <ul>
-<li><a href="https://arxiv.org/abs/1702.03044" target="_blank">Incremental network quantization</a> (INQ), a lossless quantization method with incremental idea. Combined with dynamic network surgery (DNS), the authors compressed AlexNet for 53<script type="math/tex; ">\times</script> without accuracy loss</li>
-<li><a href="https://arxiv.org/abs/1603.05279" target="_blank">Binary weights network</a> (BWN) and XNOR-Net</li>
-<li><a href="https://arxiv.org/abs/1605.04711" target="_blank">Ternary weights network</a> (TWN)</li>
-<li><a href="https://arxiv.org/abs/1602.02830" target="_blank">Binarized neural networks</a> (BNN)</li>
-<li><a href="https://arxiv.org/abs/1612.01064" target="_blank">Trained ternary quantization</a> (TTQ)</li>
-<li><a href="https://arxiv.org/abs/1510.00149" target="_blank">Deep compression</a> with network quantization, pruning and Huffman code</li>
+<li><a href="#training-with-simulated-quantization">Training with simulated quantization</a><ul>
+<li><a href="#point-wise-quantization">Point-wise quantization:</a></li>
+<li><a href="#compute-gradient">compute gradient</a></li>
 </ul>
-</div>
+</li>
+<li><a href="#inference-with-integer-arithmetic-only">Inference with integer-arithmetic only</a><ul>
+<li><a href="#data-type">Data type</a></li>
+<li><a href="#affine-mapping-from-q-to-r">Affine mapping from q to r</a></li>
+<li><a href="#the-following-operations">The Following operations</a></li>
+<li><a href="#batch-normalization-folding">Batch normalization folding</a></li>
+<li><a href="#graph-illustration">Graph illustration</a><ul>
+<li><a href="#simple-graph-for-single-layer">simple graph for single layer</a></li>
+<li><a href="#layer-with-bypass">layer with bypass</a></li>
+<li><a href="#convolutional-layer-with-batch-normalization">convolutional layer with batch normalization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div><!-- tocstop -->
+<p><strong>Paper</strong>: <a href="https://arxiv.org/abs/1712.05877" target="_blank">https://arxiv.org/abs/1712.05877</a></p>
+<p><strong>Code</strong>: refer to TensorFlowLite.quantize</p>
+<h2 id="training-with-simulated-quantization">Training with simulated quantization</h2>
+<h3 id="point-wise-quantization">Point-wise quantization:</h3>
+<p><script type="math/tex; ">clamp(r;a,b) := min(max(r, a), b)</script></p>
+<p><script type="math/tex; ">s(a,b,n) := \frac{b-a}{n-1}</script></p>
+<p><script type="math/tex; ">q(r;a,b,n):=\lfloor \frac{clamp(r;a,b)-a}{s(a,b,n)} \rceil s(a,b,n)+a</script></p>
+<p>Here, $r$ represents the real value, $q$ represents the quantized value. $\lfloor \cdot \rceil$ denotes rounding to the nearest integer.</p>
+<ul>
+<li><p>for weights: $a:=min(w), b:=max(w)$</p>
+</li>
+<li><p>for activation: collect [a;b] during training and aggregate them via exponential moving average (EMA)</p>
+</li>
+</ul>
+<pre><code>exponential moving average (EMA) in tensorflow:
+
+shallow_variable -= (1-decay) * (shallow_variable-variable)
+
+reasonable values for decay are close to 1.0, e.g., 0.999, 0.99999, etc
+</code></pre><p><strong>Note: activation quantization is disabled at the start of training</strong> </p>
+<h3 id="compute-gradient">compute gradient</h3>
+<p><script type="math/tex; "> \frac{\partial{L}}{\partial{r}} = \frac{\partial{L}}{\partial{q}}\frac{\partial{q}}{\partial{r}}</script></p>
+<p>Here, we have $\frac{\partial{q}}{\partial{r}}=0$ if $r\notin[a,b]$, otherwise $\frac{\partial{q}}{\partial{r}}=1$.</p>
+<h2 id="inference-with-integer-arithmetic-only">Inference with integer-arithmetic only</h2>
+<h3 id="data-type">Data type</h3>
+<ul>
+<li><p>input: uint8</p>
+</li>
+<li><p>weights: uint8</p>
+</li>
+<li><p>bias: int32</p>
+</li>
+<li><p>activation: int32</p>
+</li>
+<li><p>output: uint8</p>
+</li>
+</ul>
+<h3 id="affine-mapping-from-q-to-r">Affine mapping from q to r</h3>
+<p>Formulation:</p>
+<p><script type="math/tex; "> r = S(q-Z) \to q=\frac{r}{S}+Z</script></p>
+<p>where $S$ means &quot;Scale&quot; and $Z$ means &quot;Zero point&quot;. And $S=s(a,b,n), Z=z(a,b,n)$.</p>
+<p>Therefore, considering $r_3=r_1*r_2$:</p>
+<p><script type="math/tex; ">r_3 = S_3(q_3-Z_3), r_1*r_2=S_1S_2(q_1-Z_1)(q_2-Z_2)</script></p>
+<p><script type="math/tex; ">q_3 = \frac{S_1S_2}{S_3}(q_1-Z_1)(q_2-Z_2)+Z_3</script></p>
+<p>Let $M:=\frac{S_1S_2}{S_3}$ and $M=2^{-n}M_0$, $M_0\in(0.5,1]$.</p>
+<p>For matrix multiplication of two matrices with size of $N\times N$.</p>
+<p><script type="math/tex; ">q_3^{(i,k)} = Z_3 +M\sum_{j=1}^{N}(q_1^{(i,j)}-Z_1)(q_2^{(j,k)}-Z_2)</script></p>
+<p>It needs $O(N^3)$ subtraction to compute the result. </p>
+<p>More efficient implementation:</p>
+<p><script type="math/tex; ">q_3^{(i,k)} = Z_3 + M(\sum_{j=1}^N q_1^{(i,j)}q_2^{(j,k)}-\sum_{j=1}^N q_1^{(i,j)}Z_2-\sum_{j=1}^N q_2^{(j,k)}Z_1 + \sum_{j=1}^N Z_1Z_2)</script></p>
+<p><script type="math/tex; ">q_3^{(i,k)} = Z_3 + M(\sum_{j=1}^N q_1^{(i,j)}q_2^{(j,k)}-Z_2 \bar a_1^{(i)}- Z_1a_2^{(k)} + N Z_1Z_2)</script>,</p>
+<p>where $\bar a<em>1^{(i)}:=\sum</em>{j=1}^N q<em>1^{(i,j)}$ and $a_2^{(k)}:=\sum</em>{j=1}^N q<em>2^{(j,k)}$. Therefore, the computational costs is mainly from the computation of $\sum</em>{j=1}^N q_1^{(i,j)}q_2^{(j,k)}$</p>
+<h3 id="the-following-operations">The Following operations</h3>
+<ul>
+<li><p>scale down: int32 activation --&gt; int8 output activation</p>
+</li>
+<li><p>cast down: int8 activation --&gt; uint8 output</p>
+</li>
+</ul>
+<h3 id="batch-normalization-folding">Batch normalization folding</h3>
+<p><script type="math/tex; "> w_{fold}:=\frac{\gamma w}{\sqrt{EMA(\sigma_B^2)+\epsilon}}</script></p>
+<h3 id="graph-illustration">Graph illustration</h3>
+<h4 id="simple-graph-for-single-layer">simple graph for single layer</h4>
+<ul>
+<li>origin</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/simple_origin.png" alt="simple_graph_origin"></p>
+<ul>
+<li>quantized</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/simple_quantize.png" alt="simple_graph_origin"></p>
+<h4 id="layer-with-bypass">layer with bypass</h4>
+<ul>
+<li>origin</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/bypass_origin.png" alt="simple_graph_origin"></p>
+<ul>
+<li>quantized</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/bypass_quantize.png" alt="simple_graph_origin"></p>
+<h4 id="convolutional-layer-with-batch-normalization">convolutional layer with batch normalization</h4>
+<ul>
+<li>training</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/conv_bn_training.png" alt="simple_graph_origin"></p>
+<ul>
+<li>inference</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/conv_bn_inference.png" alt="simple_graph_origin"></p>
+<ul>
+<li>training with fold</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/conv_bn_training_fold.png" alt="simple_graph_origin"></p>
+<ul>
+<li>training with fold quantized</li>
+</ul>
+<p><img src="fig/integer_arithmetic_only/conv_bn_training_fold_quantize.png" alt="simple_graph_origin"></p>
+
                                 
                                 </section>
                             
@@ -472,14 +578,10 @@
 
             
                 
-                <a href="../" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                <a href="Deep Compression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Deep Compression">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
-                
-                <a href="Incremental Network Quantization.html" class="navigation navigation-next " aria-label="Next page: Incremental Network Quantization">
-                    <i class="fa fa-angle-right"></i>
-                </a>
                 
             
         
@@ -488,7 +590,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Network Quantization","level":"1.2","depth":1,"next":{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"path":"Network Quantization/Incremental Network Quantization.md","ref":"Network Quantization/Incremental Network Quantization.md","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Introduction.md","mtime":"2018-02-01T09:36:39.465Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-02-01T09:40:03.756Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Integer Arithmetic Only Inference","level":"1.2.8","depth":2,"next":{"title":"Notes","level":"1.3","depth":1,"ref":"","articles":[{"title":"Install and Use Gitbook on Windows","level":"1.3.1","depth":2,"path":"notes/gitbook.md","ref":"notes/gitbook.md","articles":[]},{"title":"Softmax Loss with Different Differentiation Methods","level":"1.3.2","depth":2,"path":"notes/manual_vs_auto_gradient.md","ref":"notes/manual_vs_auto_gradient.md","articles":[]},{"title":"PyTorch and Automatic Differentiation","level":"1.3.3","depth":2,"path":"notes/pytorch_autograd.md","ref":"notes/pytorch_autograd.md","articles":[]},{"title":"Install Caffe2 on Windows","level":"1.3.4","depth":2,"path":"notes/caffe2.md","ref":"notes/caffe2.md","articles":[]},{"title":"Markdown Tutorial","level":"1.3.5","depth":2,"path":"notes/markdown.md","ref":"notes/markdown.md","articles":[]},{"title":"VSCode","level":"1.3.6","depth":2,"path":"notes/vscode.md","ref":"notes/vscode.md","articles":[]},{"title":"Re-implementation of AuxNet","level":"1.3.7","depth":2,"path":"notes/auxnet.md","ref":"notes/auxnet.md","articles":[]},{"title":"Git","level":"1.3.8","depth":2,"path":"notes/git.md","ref":"notes/git.md","articles":[]},{"title":"Power Point","level":"1.3.9","depth":2,"path":"notes/git.md","ref":"notes/git.md","articles":[]},{"title":"PyPlot","level":"1.3.10","depth":2,"path":"notes/pyplot.md","ref":"notes/pyplot.md","articles":[]}]},"previous":{"title":"Deep Compression","level":"1.2.7","depth":2,"path":"Network Quantization/Deep Compression.md","ref":"Network Quantization/Deep Compression.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro"],"pluginsConfig":{"etoc":{"h2lb":3,"header":1,"maxdepth":4,"mindepth":3,"notoc":false},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Integer Arithmetic Only Inference.md","mtime":"2018-02-01T09:35:37.693Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-02-01T09:40:03.756Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
