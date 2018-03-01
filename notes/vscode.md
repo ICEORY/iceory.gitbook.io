@@ -15,4 +15,4 @@
 
 [2] http://www.jianshu.com/p/57f8d1e026f5
 
-[3]https://tex.stackexchange.com/questions/353132/align-input-and-output-of-algorithm-to-left
+[3] https://tex.stackexchange.com/questions/353132/align-input-and-output-of-algorithm-to-left

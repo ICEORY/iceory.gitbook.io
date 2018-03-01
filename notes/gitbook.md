@@ -57,3 +57,11 @@ npm install gitbook-plugin-search-pro
     ]
 }
 ```
+
+## gitbook editor
+
+### 如何切换预览模式？
+
+新版的gitbook editor将预览模式的切换收入了右下角的“？”那里，选择“Edit Markdown”即可切换。
+
+参考链接： https://www.zhihu.com/question/56703698/answer/150102664
