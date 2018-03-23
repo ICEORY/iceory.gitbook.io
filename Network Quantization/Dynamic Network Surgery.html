@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Dynamic Network Surgery · GitBook</title>
+        <title>Dynamic Network Surgery · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,7 +676,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="dns-dynamic-network-surgery">DNS (Dynamic Network Surgery)</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#dns-dynamic-network-surgery"><b>1. </b>DNS (Dynamic Network Surgery)</a></li><ul><li><span class="title-icon "></span><a href="#pruning-and-splicing"><b>1.1. </b>Pruning and Splicing</a></li><ul><li><span class="title-icon "></span><a href="#important-tips"><b>1.1.1. </b>important tips</a></li></ul><li><span class="title-icon "></span><a href="#implementation-in-pytorch"><b>1.2. </b>Implementation in PyTorch</a></li><li><span class="title-icon "></span><a href="#experimental-results"><b>1.3. </b>Experimental Results</a></li></ul></ul></div><a href="#dns-dynamic-network-surgery" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="dns-dynamic-network-surgery"><a name="dns-dynamic-network-surgery" class="anchor-navigation-ex-anchor" href="#dns-dynamic-network-surgery"><i class="fa fa-link" aria-hidden="true"></i></a>1. DNS (Dynamic Network Surgery)</h1>
 <!-- toc --><div id="toc" class="toc">
 
 <ul>
@@ -651,7 +691,7 @@
 </div><!-- tocstop -->
 <p><img src="fig/Overview of DNS.png" alt="Overview of DNS"></p>
 <p>In this paper, the authors proposed dynamic network surgery to prune unimportant connections of the network. Different from previous methods, the proposed method contains two operations: <strong>pruning</strong> and <strong>splicing</strong>. Considering the complexity of deep neural networks, it is difficult to decide which connection is important and which one should be pruned. Thus the splicing operation is to recover the pruned weights that are found to be important during training phase. In contrary, weights are pruned with no chance to come back in previous methods, and that may lead to severe loss of accuracy.</p>
-<h2 id="pruning-and-splicing">Pruning and Splicing</h2>
+<h2 id="pruning-and-splicing"><a name="pruning-and-splicing" class="anchor-navigation-ex-anchor" href="#pruning-and-splicing"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. Pruning and Splicing</h2>
 <p>Suppose <script type="math/tex; ">W_k</script> represents weights of a DNN model, and mask <script type="math/tex; ">T_k(i,j)\in \{0,1\}</script> denotes the states of connections of network. The optimize object can be formulated as follows:
 <script type="math/tex; mode=display">
 \min_{W_k, T_k} L(W_k\odot T_k)~s.t. T_k^{(i, j)}=h_k(W_k^{(i, j)}), \forall (i,j)\in \mathcal{I}, \tag{1}
@@ -677,19 +717,19 @@ where <script type="math/tex; ">cRate</script> is the factor deciding the compre
 W_k^{i,j} \gets W_k^{(i,j)}-\beta \frac{\partial}{\partial(W_k^{(i,j)}T_k^{(i,j)})}L(W_k\odot T_k), \forall(i,j)\in \mathcal{I} \tag{4}
 </script>
 Considering the convergence of the proposed method, the authors suggest that the frequencies of pruning and splicing can be slowed down with a monotonically non-increasing function <script type="math/tex; ">\sigma(\cdot)</script> which indicates the probability of mask <script type="math/tex; ">T_k</script> that to be modified in single training iteration. With amount of training iterations, the value of <script type="math/tex; ">\sigma</script> may even decreased to zero, and the pruning and splicing to the network will be stopped.</p>
-<h3 id="important-tips">important tips</h3>
+<h3 id="important-tips"><a name="important-tips" class="anchor-navigation-ex-anchor" href="#important-tips"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. important tips</h3>
 <ul>
 <li>The computation of thresholds only applied at the very beginning, and would not be change after that</li>
 <li>Considering the gradient vanishing problem, the authors prune convolutional layers and fully connected layers separately, which is similar to <a href="http://papers.nips.cc/paper/5784-learning-both-weights-and-connections-for-efficient-neural-network.pdf" target="_blank">Han&apos;s paper</a></li>
 <li>Pruned weights would also be updated during training</li>
 </ul>
-<h2 id="implementation-in-pytorch">Implementation in PyTorch</h2>
+<h2 id="implementation-in-pytorch"><a name="implementation-in-pytorch" class="anchor-navigation-ex-anchor" href="#implementation-in-pytorch"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. Implementation in PyTorch</h2>
 <p><strong>Prepare: </strong> pre-train a DNN model</p>
 <p><strong>Step 1, pruning and splicing: </strong> compute <script type="math/tex; ">a_k</script> and <script type="math/tex; ">b_k</script> by Equation (3) and update mask <script type="math/tex; ">T_k</script> by Equation (2) with probability of <script type="math/tex; ">\sigma(iter)</script></p>
 <p><strong>Step 2, training: </strong> adopt forward and backward propagation and compute Loss and Gradient</p>
 <p><strong>Step 3, updating: </strong> update weights of the model with mask <script type="math/tex; ">T_k</script> using SGD</p>
 <p><strong>Repeating: </strong> repeating step 1 to step 3 until the number of inter reaches its maximum</p>
-<h2 id="experimental-results">Experimental Results</h2>
+<h2 id="experimental-results"><a name="experimental-results" class="anchor-navigation-ex-anchor" href="#experimental-results"><i class="fa fa-link" aria-hidden="true"></i></a>1.3. Experimental Results</h2>
 <p>The authors conducted experiments on several models including LeNet-5, LeNet-300-100 and AlexNet. The experimental results can be summarized as follows:</p>
 <table>
 <thead>
@@ -856,7 +896,7 @@ Considering the convergence of the proposed method, the authors suggest that the
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"next":{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"path":"Network Quantization/Binary Weight Networks.md","ref":"Network Quantization/Binary Weight Networks.md","articles":[]},"previous":{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"path":"Network Quantization/Incremental Network Quantization.md","ref":"Network Quantization/Incremental Network Quantization.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Dynamic Network Surgery.md","mtime":"2017-06-24T08:32:51.723Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"next":{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"path":"Network Quantization/Binary Weight Networks.md","ref":"Network Quantization/Binary Weight Networks.md","articles":[]},"previous":{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"path":"Network Quantization/Incremental Network Quantization.md","ref":"Network Quantization/Incremental Network Quantization.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"Network Quantization/Dynamic Network Surgery.md","mtime":"2017-06-24T08:32:51.723Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

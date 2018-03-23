@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Softmax Loss with Different Differentiation Methods · GitBook</title>
+        <title>Softmax Loss with Different Differentiation Methods · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,7 +676,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="manual-gradient-vs-auto-gradient-pytorch">Manual Gradient V.S. Auto Gradient (PyTorch)</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#manual-gradient-vs-auto-gradient-pytorch"><b>1. </b>Manual Gradient V.S. Auto Gradient (PyTorch)</a></li><ul><li><span class="title-icon "></span><a href="#reproduction-of-softmax-loss-with-cross-entropy"><b>1.1. </b>Reproduction of Softmax Loss with Cross Entropy</a></li><ul><li><span class="title-icon "></span><a href="#softmax-function"><b>1.1.1. </b>softmax function</a></li><li><span class="title-icon "></span><a href="#cross-entropy-loss"><b>1.1.2. </b>Cross entropy loss</a></li><li><span class="title-icon "></span><a href="#coding-in-pytorch"><b>1.1.3. </b>Coding in PyTorch</a></li><li><span class="title-icon "></span><a href="#reference"><b>1.1.4. </b>Reference:</a></li></ul></ul></ul></div><a href="#manual-gradient-vs-auto-gradient-pytorch" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="manual-gradient-vs-auto-gradient-pytorch"><a name="manual-gradient-vs-auto-gradient-pytorch" class="anchor-navigation-ex-anchor" href="#manual-gradient-vs-auto-gradient-pytorch"><i class="fa fa-link" aria-hidden="true"></i></a>1. Manual Gradient V.S. Auto Gradient (PyTorch)</h1>
 <!-- toc --><div id="toc" class="toc">
 
 <ul>
@@ -656,8 +696,8 @@
 </div><!-- tocstop -->
 <hr>
 <p>github: <a href="https://github.com/ICEORY/softmax_loss_gradient.git" target="_blank">https://github.com/ICEORY/softmax_loss_gradient.git</a></p>
-<h2 id="reproduction-of-softmax-loss-with-cross-entropy">Reproduction of Softmax Loss with Cross Entropy</h2>
-<h3 id="softmax-function">softmax function</h3>
+<h2 id="reproduction-of-softmax-loss-with-cross-entropy"><a name="reproduction-of-softmax-loss-with-cross-entropy" class="anchor-navigation-ex-anchor" href="#reproduction-of-softmax-loss-with-cross-entropy"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. Reproduction of Softmax Loss with Cross Entropy</h2>
+<h3 id="softmax-function"><a name="softmax-function" class="anchor-navigation-ex-anchor" href="#softmax-function"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. softmax function</h3>
 <p>the softmax function is defined by</p>
 <p><script type="math/tex; ">
 y_i = \frac{e^{x_i}}{\sum e^{x_k}}, for~i=1,..., C
@@ -670,7 +710,7 @@ where $x$ is the input with $C$ channels, $y$ is the respected output.</p>
 <p><script type="math/tex; ">
 {\rm if}~i\ne j,~\frac{\partial y_i}{\partial x_j}=\frac{\partial \frac{e^{x_j}}{\sum e^k}}{\partial x_j} = \frac{0\cdot \sum e^{x_k}-e^{x_i}\cdot e^{x_j}}{(\sum e^{x_k})^2} = -\frac{e^{x_i}}{\sum e^{x_k}} \frac{e^{x_j}}{\sum e^{x_k}} = -y_i \cdot y_j
 </script></p>
-<h3 id="cross-entropy-loss">Cross entropy loss</h3>
+<h3 id="cross-entropy-loss"><a name="cross-entropy-loss" class="anchor-navigation-ex-anchor" href="#cross-entropy-loss"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Cross entropy loss</h3>
 <p>the cross entropy loss function is </p>
 <p><script type="math/tex; ">
 \mathcal L = -\sum_{c=1}^C t_c\cdot log(y_c),
@@ -684,9 +724,9 @@ where $t$ is the one-hot label.</p>
 <p><script type="math/tex; ">
 \frac{\partial \mathcal L}{\partial x_i} = -\sum_{c=1}^C \frac{\partial t_c log (y_c)}{\partial x_i} = -\sum_{c=1}^C t_c \frac{\partial log(y_c)}{\partial x_i} = -\sum_{c=1}^C t_c\frac{1}{y_c}\frac{\partial y_c}{\partial x_i} = -\frac{t_i}{y_i}\frac{\partial {y_i}}{\partial x_i}-\sum_{i\ne j}^C \frac{t_j}{y_j}\frac{\partial y_j}{\partial x_i} = -\frac{t_i}{y_i}y_i(1-y_i) - \sum_{i\ne j}^C \frac{\partial t_j}{y_j}(-y_i y_j) = -t_i+t_i y_i + \sum_{i\ne j}^C t_j y_i = -t_i +y_i\sum_i^C t_i = y_i-t_i
 </script></p>
-<h3 id="coding-in-pytorch">Coding in PyTorch</h3>
-<h4 id="using-basic-function-of-pytorch">Using basic function of PyTorch</h4>
-<h5 id="forward-propagation-of-softmaxloss">forward propagation of SoftMaxLoss</h5>
+<h3 id="coding-in-pytorch"><a name="coding-in-pytorch" class="anchor-navigation-ex-anchor" href="#coding-in-pytorch"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. Coding in PyTorch</h3>
+<h4 id="using-basic-function-of-pytorch"><a name="using-basic-function-of-pytorch" class="anchor-navigation-ex-anchor" href="#using-basic-function-of-pytorch"><i class="fa fa-link" aria-hidden="true"></i></a><a name="using-basic-function-of-pytorch" class="plugin-anchor" href="#using-basic-function-of-pytorch"><i class="fa fa-link" aria-hidden="true"></i></a>Using basic function of PyTorch</h4>
+<h5 id="forward-propagation-of-softmaxloss"><a name="forward-propagation-of-softmaxloss" class="anchor-navigation-ex-anchor" href="#forward-propagation-of-softmaxloss"><i class="fa fa-link" aria-hidden="true"></i></a><a name="forward-propagation-of-softmaxloss" class="plugin-anchor" href="#forward-propagation-of-softmaxloss"><i class="fa fa-link" aria-hidden="true"></i></a>forward propagation of SoftMaxLoss</h5>
 <pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">forward</span><span class="hljs-params">(self, x, target)</span>:</span>
         <span class="hljs-string">&quot;&quot;&quot;
         forward propagation
@@ -719,7 +759,7 @@ where $t$ is the one-hot label.</p>
     output = (-t * torch.log(y)).sum() / y.size(<span class="hljs-number">0</span>)
     <span class="hljs-keyword">return</span> output
 </code></pre>
-<h5 id="backward-propagation">backward propagation:</h5>
+<h5 id="backward-propagation"><a name="backward-propagation" class="anchor-navigation-ex-anchor" href="#backward-propagation"><i class="fa fa-link" aria-hidden="true"></i></a><a name="backward-propagation" class="plugin-anchor" href="#backward-propagation"><i class="fa fa-link" aria-hidden="true"></i></a>backward propagation:</h5>
 <pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">backward</span><span class="hljs-params">(self, grad_output)</span>:</span>
         <span class="hljs-string">&quot;&quot;&quot;
         backward propagation
@@ -727,7 +767,7 @@ where $t$ is the one-hot label.</p>
         grad_input = grad_output * (self.y - self.t) / self.y.size(<span class="hljs-number">0</span>)
         <span class="hljs-keyword">return</span> grad_input, <span class="hljs-keyword">None</span>
 </code></pre>
-<h4 id="testing-code">testing code:</h4>
+<h4 id="testing-code"><a name="testing-code" class="anchor-navigation-ex-anchor" href="#testing-code"><i class="fa fa-link" aria-hidden="true"></i></a><a name="testing-code" class="plugin-anchor" href="#testing-code"><i class="fa fa-link" aria-hidden="true"></i></a>testing code:</h4>
 <pre><code class="lang-python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_softmax_loss_backward</span><span class="hljs-params">()</span>:</span>
     <span class="hljs-string">&quot;&quot;&quot;
     analyse the difference between autograd and manual grad
@@ -833,7 +873,7 @@ distance between x.grad and x_copy.grad:  1.99762357071e-16
 |===&gt; comparing time-costing
 time of manual gradient:  1.170181036
 time of auto gradient:  2.39760398865
-</code></pre><h3 id="reference">Reference:</h3>
+</code></pre><h3 id="reference"><a name="reference" class="anchor-navigation-ex-anchor" href="#reference"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. Reference:</h3>
 <p>[1] <a href="http://shuokay.com/2016/07/20/softmax-loss/" target="_blank">http://shuokay.com/2016/07/20/softmax-loss/</a></p>
 <p>[2] <a href="https://en.wikipedia.org/wiki/Cross_entropy" target="_blank">https://en.wikipedia.org/wiki/Cross_entropy</a></p>
 
@@ -879,7 +919,7 @@ time of auto gradient:  2.39760398865
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Softmax Loss with Different Differentiation Methods","level":"1.3.2","depth":2,"next":{"title":"PyTorch and Automatic Differentiation","level":"1.3.3","depth":2,"path":"notes/pytorch_autograd.md","ref":"notes/pytorch_autograd.md","articles":[]},"previous":{"title":"Install and Use Gitbook on Windows","level":"1.3.1","depth":2,"path":"notes/gitbook.md","ref":"notes/gitbook.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"notes/manual_vs_auto_gradient.md","mtime":"2018-02-01T06:58:48.079Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Softmax Loss with Different Differentiation Methods","level":"1.3.2","depth":2,"next":{"title":"PyTorch and Automatic Differentiation","level":"1.3.3","depth":2,"path":"notes/pytorch_autograd.md","ref":"notes/pytorch_autograd.md","articles":[]},"previous":{"title":"Install and Use Gitbook on Windows","level":"1.3.1","depth":2,"path":"notes/gitbook.md","ref":"notes/gitbook.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"notes/manual_vs_auto_gradient.md","mtime":"2018-02-01T06:58:48.079Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

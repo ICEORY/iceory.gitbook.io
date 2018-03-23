@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Incremental Network Quantization · GitBook</title>
+        <title>Incremental Network Quantization · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,7 +676,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="quantization-methods">Quantization Methods</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#quantization-methods"><b>1. </b>Quantization Methods</a></li><ul><li><span class="title-icon "></span><a href="#inq-incremental-network-quantization"><b>1.1. </b>INQ (Incremental Network Quantization)</a></li><ul><li><span class="title-icon "></span><a href="#weight-quantization-strategy"><b>1.1.1. </b>Weight Quantization Strategy</a></li><li><span class="title-icon "></span><a href="#weight-partition-strategies"><b>1.1.2. </b>Weight Partition Strategies</a></li><li><span class="title-icon "></span><a href="#implementation-in-pytorch"><b>1.1.3. </b>Implementation in PyTorch</a></li><li><span class="title-icon "></span><a href="#experimental-results"><b>1.1.4. </b>Experimental Results</a></li></ul></ul></ul></div><a href="#quantization-methods" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="quantization-methods"><a name="quantization-methods" class="anchor-navigation-ex-anchor" href="#quantization-methods"><i class="fa fa-link" aria-hidden="true"></i></a>1. Quantization Methods</h1>
 <!-- toc --><div id="toc" class="toc">
 
 <ul>
@@ -654,10 +694,10 @@
 </ul>
 
 </div><!-- tocstop -->
-<h2 id="inq-incremental-network-quantization">INQ (Incremental Network Quantization)</h2>
+<h2 id="inq-incremental-network-quantization"><a name="inq-incremental-network-quantization" class="anchor-navigation-ex-anchor" href="#inq-incremental-network-quantization"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. INQ (Incremental Network Quantization)</h2>
 <p><img src="fig/INQ overview.png" alt="INQ overview"></p>
 <p>As most of the existing methods suffer from high decreasing on model performance and need many training epochs, the authors provided a lossless quantization method to overcome these problems. The proposed method mainly contains three steps: weight partition, group-wise quantization and re-training. Given a trained model, the first step of INQ is to divide weights of the model into to group, one for quantization and another for re-training. Second, apply weight quantization and convert 32-bits floating point data to low precision data. Third, freeze the quantized weights and retraining the network using SGD, then update remaining weights of the network. Repeating these three steps until all weights are quantized, then we can get a low precision model without significant accuracy loss. Considering binary shift operation is more efficient in hardware, the authors quantize weights of convolutional layers and fully connected layers to the  power of 2. </p>
-<h3 id="weight-quantization-strategy">Weight Quantization Strategy</h3>
+<h3 id="weight-quantization-strategy"><a name="weight-quantization-strategy" class="anchor-navigation-ex-anchor" href="#weight-quantization-strategy"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Weight Quantization Strategy</h3>
 <p>Suppose weights of a pre-trained full precision model can be represented by <script type="math/tex; ">\{ W_l: 1 \le l \le L \}</script>, the quantized weights are represented by <script type="math/tex; ">\widehat{W_l}</script> , where each item is chosen from <script type="math/tex; ">P_l = \{\pm2^{n_1}, \cdots, \pm2^{n_2}, 0\}</script>. The quantization method is formulated by
 <script type="math/tex; mode=display">
 \widehat{W_l}(i, j) =
@@ -669,7 +709,7 @@
 where <script type="math/tex; ">\alpha</script> and <script type="math/tex; ">\beta</script> are two adjacent elements in the sorted <script type="math/tex; ">P_l</script>. Based on Equation (1), <script type="math/tex; ">n_1</script> and <script type="math/tex; ">n_2</script> in <script type="math/tex; ">P_l</script> can be computed by</p>
 <p><script type="math/tex; ">n_1 = floor(log_2(4s/3))</script>, where <script type="math/tex; ">s=max(abs(W_l))</script>;</p>
 <p><script type="math/tex; ">n_2 =  n_1+1-2^{(b-1)}/2</script>, where <script type="math/tex; ">b</script> is the quantized bit-width.</p>
-<h4 id="proof-1-compute-factor-43-of-n1">Proof 1: compute factor 4/3 of $n_1$</h4>
+<h4 id="proof-1-compute-factor-43-of-n1"><a name="proof-1-compute-factor-43-of-n1" class="anchor-navigation-ex-anchor" href="#proof-1-compute-factor-43-of-n1"><i class="fa fa-link" aria-hidden="true"></i></a><a name="proof-1-compute-factor-43-of-n1" class="plugin-anchor" href="#proof-1-compute-factor-43-of-n1"><i class="fa fa-link" aria-hidden="true"></i></a>Proof 1: compute factor 4/3 of $n_1$</h4>
 <p>Considering the extremely condition in Equation (1), we have </p>
 <p><script type="math/tex; ">(2^{n_1-1} + 2^{n_1})/2 \le max(abs(W_l)) \le3\cdot2^{n_1}/2</script>.</p>
 <p>Then, </p>
@@ -680,11 +720,11 @@ where <script type="math/tex; ">\alpha</script> and <script type="math/tex; ">\b
 <p><script type="math/tex; ">floor(x)\le x \le ceil(x)</script>, </p>
 <p>then we let <script type="math/tex; ">n_1=floor(4max(abs(W_l))/3)</script>.</p>
 <p>For simplifying the equation, define <script type="math/tex; ">s=max(abs(W_l))</script>, then we have <script type="math/tex; ">n_1 = floor(log_2(4s/3))</script>.</p>
-<h4 id="proof-2-compute-n2">Proof 2: compute $n_2$</h4>
+<h4 id="proof-2-compute-n2"><a name="proof-2-compute-n2" class="anchor-navigation-ex-anchor" href="#proof-2-compute-n2"><i class="fa fa-link" aria-hidden="true"></i></a><a name="proof-2-compute-n2" class="plugin-anchor" href="#proof-2-compute-n2"><i class="fa fa-link" aria-hidden="true"></i></a>Proof 2: compute $n_2$</h4>
 <p>As <script type="math/tex; ">b</script> denotes the expected bit-width, one bit for zero and others for representing the powers of 2, which including <script type="math/tex; ">2^{b-1}</script> different values. Here we have <script type="math/tex; ">(n_1-n_2+1)\cdot2= 2^{b-1}</script> according to definition of <script type="math/tex; ">P_l</script>. Thus <script type="math/tex; ">n_2</script> can be computed by <script type="math/tex; ">n_2 = n_1+1-2^{b-1}/2</script>.</p>
-<h3 id="weight-partition-strategies">Weight Partition Strategies</h3>
+<h3 id="weight-partition-strategies"><a name="weight-partition-strategies" class="anchor-navigation-ex-anchor" href="#weight-partition-strategies"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Weight Partition Strategies</h3>
 <p>In this paper, the authors explored two kinds of weight partition strategies, including random partition and pruning-inspired partition. The second partition strategy considers that weights with larger absolute values are more important than the smaller ones and would have more possibility to be quantized. The experimental results also shows that the pruning-inspired strategy outperforms the first one for about 0.8% with ResNet-18.</p>
-<h3 id="implementation-in-pytorch">Implementation in PyTorch</h3>
+<h3 id="implementation-in-pytorch"><a name="implementation-in-pytorch" class="anchor-navigation-ex-anchor" href="#implementation-in-pytorch"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. Implementation in PyTorch</h3>
 <p><img src="fig/INQ strategy.png" alt="INQ strategy"></p>
 <p><strong>Prepare:</strong> pre-train a full-precision model</p>
 <p><strong>Step1, weight partition: </strong></p>
@@ -706,7 +746,7 @@ where <script type="math/tex; ">\alpha</script> and <script type="math/tex; ">\b
 <li>repeating operations 2 to 4 with full training phase.</li>
 </ol>
 <p><strong>Repeat: </strong> repeat step1 to step 3 until all weights are quantized.</p>
-<h3 id="experimental-results">Experimental Results</h3>
+<h3 id="experimental-results"><a name="experimental-results" class="anchor-navigation-ex-anchor" href="#experimental-results"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. Experimental Results</h3>
 <p>The authors adopted the proposed method to several model, including AlexNet, VGG-16, GoogleNet, ResNet-18 and ResNet-50. More experiments for exploration was conducted on ResNet-18. Experimental results on ImageNet using center crop validation are shown as follows.</p>
 <table>
 <thead>
@@ -836,7 +876,7 @@ where <script type="math/tex; ">\alpha</script> and <script type="math/tex; ">\b
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"next":{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"path":"Network Quantization/Dynamic Network Surgery.md","ref":"Network Quantization/Dynamic Network Surgery.md","articles":[]},"previous":{"title":"Network Quantization","level":"1.2","depth":1,"path":"Network Quantization/Introduction.md","ref":"Network Quantization/Introduction.md","articles":[{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"path":"Network Quantization/Incremental Network Quantization.md","ref":"Network Quantization/Incremental Network Quantization.md","articles":[]},{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"path":"Network Quantization/Dynamic Network Surgery.md","ref":"Network Quantization/Dynamic Network Surgery.md","articles":[]},{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"path":"Network Quantization/Binary Weight Networks.md","ref":"Network Quantization/Binary Weight Networks.md","articles":[]},{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"path":"Network Quantization/Ternary Weight Networks.md","ref":"Network Quantization/Ternary Weight Networks.md","articles":[]},{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"path":"Network Quantization/Binarized Neural Networks.md","ref":"Network Quantization/Binarized Neural Networks.md","articles":[]},{"title":"Deep Compression","level":"1.2.7","depth":2,"path":"Network Quantization/Deep Compression.md","ref":"Network Quantization/Deep Compression.md","articles":[]},{"title":"Integer Arithmetic Only Inference","level":"1.2.8","depth":2,"path":"Network Quantization/Integer Arithmetic Only Inference.md","ref":"Network Quantization/Integer Arithmetic Only Inference.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Incremental Network Quantization.md","mtime":"2017-06-21T16:05:55.569Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"next":{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"path":"Network Quantization/Dynamic Network Surgery.md","ref":"Network Quantization/Dynamic Network Surgery.md","articles":[]},"previous":{"title":"Network Quantization","level":"1.2","depth":1,"path":"Network Quantization/Introduction.md","ref":"Network Quantization/Introduction.md","articles":[{"title":"Incremental Network Quantization","level":"1.2.1","depth":2,"path":"Network Quantization/Incremental Network Quantization.md","ref":"Network Quantization/Incremental Network Quantization.md","articles":[]},{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"path":"Network Quantization/Dynamic Network Surgery.md","ref":"Network Quantization/Dynamic Network Surgery.md","articles":[]},{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"path":"Network Quantization/Binary Weight Networks.md","ref":"Network Quantization/Binary Weight Networks.md","articles":[]},{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"path":"Network Quantization/Ternary Weight Networks.md","ref":"Network Quantization/Ternary Weight Networks.md","articles":[]},{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"path":"Network Quantization/Binarized Neural Networks.md","ref":"Network Quantization/Binarized Neural Networks.md","articles":[]},{"title":"Deep Compression","level":"1.2.7","depth":2,"path":"Network Quantization/Deep Compression.md","ref":"Network Quantization/Deep Compression.md","articles":[]},{"title":"Integer Arithmetic Only Inference","level":"1.2.8","depth":2,"path":"Network Quantization/Integer Arithmetic Only Inference.md","ref":"Network Quantization/Integer Arithmetic Only Inference.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"Network Quantization/Incremental Network Quantization.md","mtime":"2017-06-21T16:05:55.569Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

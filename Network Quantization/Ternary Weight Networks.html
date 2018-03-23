@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Ternary Weight Networks · GitBook</title>
+        <title>Ternary Weight Networks · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,7 +676,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="twn-ternary-weight-networks">TWN (Ternary Weight Networks)</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#twn-ternary-weight-networks"><b>1. </b>TWN (Ternary Weight Networks)</a></li><ul><li><span class="title-icon "></span><a href="#training-methods"><b>1.1. </b>Training Methods</a></li><ul><li><span class="title-icon "></span><a href="#important-tips"><b>1.1.1. </b>Important Tips</a></li></ul><li><span class="title-icon "></span><a href="#experimental-results"><b>1.2. </b>Experimental Results</a></li></ul></ul></div><a href="#twn-ternary-weight-networks" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="twn-ternary-weight-networks"><a name="twn-ternary-weight-networks" class="anchor-navigation-ex-anchor" href="#twn-ternary-weight-networks"><i class="fa fa-link" aria-hidden="true"></i></a>1. TWN (Ternary Weight Networks)</h1>
 <!-- toc --><div id="toc" class="toc">
 
 <ul>
@@ -682,9 +722,9 @@ where <script type="math/tex; ">I_\triangle = \{i|~|W|\gt\triangle\}</script> an
 \triangle^* = \arg\max_{\triangle\gt 0}(\sum_{i\in I_\triangle}|W_i|^2) \tag{5}
 </script>
 Here solution of <script type="math/tex; ">\triangle</script> is approximated by <script type="math/tex; ">\triangle^*\approx0.7\cdot E(|W|) \approx \frac{0.7}{n}\sum_{i=1}^n|W_i|</script>.</p>
-<h2 id="training-methods">Training Methods</h2>
+<h2 id="training-methods"><a name="training-methods" class="anchor-navigation-ex-anchor" href="#training-methods"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. Training Methods</h2>
 <p>The training of ternary weight networks can be summarized to three steps: quantization, training and updating. Quantization phase is to quantize the weights of convolutional layers using Equation (5), then apply standard forward and backward propagation to the network, and update parameters using standard SGD. <a href="https://github.com/fengfu-chris/caffe-twns" target="_blank">Source code</a> is available on GitHub.</p>
-<h3 id="important-tips">Important Tips</h3>
+<h3 id="important-tips"><a name="important-tips" class="anchor-navigation-ex-anchor" href="#important-tips"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Important Tips</h3>
 <ul>
 <li><script type="math/tex; ">\alpha</script> is used as the scaling factor for input <script type="math/tex; ">X</script> not for weights <script type="math/tex; ">W</script></li>
 <li>gradient is computed using <script type="math/tex; ">W^t</script> </li>
@@ -694,7 +734,7 @@ Here solution of <script type="math/tex; ">\triangle</script> is approximated by
 <li>apply weight_decay would lead results worse </li>
 <li><a href="http://blog.csdn.net/xjtu_noc_wei/article/details/52862282" target="_blank">this blog</a> is useful for implementation</li>
 </ul>
-<h2 id="experimental-results">Experimental Results</h2>
+<h2 id="experimental-results"><a name="experimental-results" class="anchor-navigation-ex-anchor" href="#experimental-results"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. Experimental Results</h2>
 <p>Three data sets are used in this paper, including MNIST, CIFAR-10, ImageNet. To different data sets, the authors conducted experiments using LeNet-5 (32-C5 + MP2 + 64-C5 + MP2 + 512FC + SVM), VGG-inspired network (2<script type="math/tex; ">\times</script>(128-C3) + MP2 + 2<script type="math/tex; ">\times</script>(256-C3) + MP2 + 2<script type="math/tex; ">\times</script>(512-C3) + MP2 + 1024-FC + Softmax), ResNet-18, respectively. Network architecture and parameters setting for different data sets are shown as follows:</p>
 <table>
 <thead>
@@ -850,7 +890,7 @@ Here solution of <script type="math/tex; ">\triangle</script> is approximated by
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"next":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},"previous":{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"path":"Network Quantization/Binary Weight Networks.md","ref":"Network Quantization/Binary Weight Networks.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Ternary Weight Networks.md","mtime":"2017-06-24T16:29:33.738Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"next":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},"previous":{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"path":"Network Quantization/Binary Weight Networks.md","ref":"Network Quantization/Binary Weight Networks.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"Network Quantization/Ternary Weight Networks.md","mtime":"2017-06-24T16:29:33.738Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

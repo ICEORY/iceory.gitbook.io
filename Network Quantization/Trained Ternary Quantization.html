@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Trained Ternary Quantization · GitBook</title>
+        <title>Trained Ternary Quantization · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,7 +676,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="ttq-trained-ternary-quantization">TTQ (Trained Ternary Quantization)</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#ttq-trained-ternary-quantization"><b>1. </b>TTQ (Trained Ternary Quantization)</a></li><ul><li><span class="title-icon "></span><a href="#training-methods"><b>1.1. </b>Training Methods</a></li><li><span class="title-icon "></span><a href="#experimental-results"><b>1.2. </b>Experimental results</a></li></ul></ul></div><a href="#ttq-trained-ternary-quantization" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="ttq-trained-ternary-quantization"><a name="ttq-trained-ternary-quantization" class="anchor-navigation-ex-anchor" href="#ttq-trained-ternary-quantization"><i class="fa fa-link" aria-hidden="true"></i></a>1. TTQ (Trained Ternary Quantization)</h1>
 <p>The ternary quantization methods proposed in this paper based on threshold and quantized weights to 0 and {-1, +1} with two different scaling factor. The authors also suggested the rule of scaled gradient to update weight in different group. Quantized ternary weight <script type="math/tex; ">w_l^i</script> of the network can be calculated by:
 <script type="math/tex; mode=display">
 w_l^t = 
@@ -661,13 +701,13 @@ W_l^n\times\frac{\partial L}{\partial w_l^t}&:&\tilde{w} \lt -\triangle_l
 \end{cases} \tag{3}
 </script>
 Different from TWN, the authors explored two strategies to decide the values of thresholds: (1) <script type="math/tex; ">\triangle_l=t\times\max(|\tilde{w}|)</script>, <script type="math/tex; ">t</script> is set to 0.05 on CIFAR-10 and ImageNet; (2) <script type="math/tex; ">\triangle_l=r</script>, where <script type="math/tex; ">r</script> is a hyper-parameter and adjusted with various sparsities. For exploring the trade-off between sparsity and accuracy, the sparsity of weights are growing from 0 to 0.5 and the best result occurs with  sparsity between 0.3 and 0.5.</p>
-<h2 id="training-methods">Training Methods</h2>
+<h2 id="training-methods"><a name="training-methods" class="anchor-navigation-ex-anchor" href="#training-methods"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. Training Methods</h2>
 <p><img src="fig/Overview of TTQ.png" alt="Overview of TTQ"></p>
 <p><strong>First:</strong> normalize full-precision weights to range <script type="math/tex; ">[-1, +1]</script> by dividing each weight by the maximum weight</p>
 <p><strong>Second:</strong> quantize weights to <script type="math/tex; ">\{-W_l^n, 0, W_l^p\}</script> with threshold factor <script type="math/tex; ">t</script></p>
 <p><strong>Third:</strong> compute the scaled gradients and update the scaling coefficients with back propagation</p>
 <p><a href="https://github.com/czhu95/ternarynet" target="_blank">Source code</a> is available on GitHub.</p>
-<h2 id="experimental-results">Experimental results</h2>
+<h2 id="experimental-results"><a name="experimental-results" class="anchor-navigation-ex-anchor" href="#experimental-results"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. Experimental results</h2>
 <p>Testing error on CIFAR-10 with ResNet is shown as follows:</p>
 <table>
 <thead>
@@ -809,7 +849,7 @@ Different from TWN, the authors explored two strategies to decide the values of 
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"next":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"path":"Network Quantization/Binarized Neural Networks.md","ref":"Network Quantization/Binarized Neural Networks.md","articles":[]},"previous":{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"path":"Network Quantization/Ternary Weight Networks.md","ref":"Network Quantization/Ternary Weight Networks.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Trained Ternary Quantization.md","mtime":"2017-06-25T09:09:34.940Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"next":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"path":"Network Quantization/Binarized Neural Networks.md","ref":"Network Quantization/Binarized Neural Networks.md","articles":[]},"previous":{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"path":"Network Quantization/Ternary Weight Networks.md","ref":"Network Quantization/Ternary Weight Networks.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"Network Quantization/Trained Ternary Quantization.md","mtime":"2017-06-25T09:09:34.940Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

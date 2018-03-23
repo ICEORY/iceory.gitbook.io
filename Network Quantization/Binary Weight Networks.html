@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Binary Weight Networks · GitBook</title>
+        <title>Binary Weight Networks · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,7 +676,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="bwn-binary-weight-networks-and-xnor-net">BWN (Binary Weight Networks) and XNOR-Net</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#bwn-binary-weight-networks-and-xnor-net"><b>1. </b>BWN (Binary Weight Networks) and XNOR-Net</a></li><ul><li><span class="title-icon "></span><a href="#binary-weight-networks"><b>1.1. </b>Binary Weight Networks</a></li><ul><li><span class="title-icon "></span><a href="#proof-1-solve-objective-function"><b>1.1.1. </b>Proof 1: solve objective function</a></li><li><span class="title-icon "></span><a href="#implementation-in-pytorch"><b>1.1.2. </b>Implementation in PyTorch</a></li></ul><li><span class="title-icon "></span><a href="#xnor-networks"><b>1.2. </b>XNOR-Networks</a></li><ul><li><span class="title-icon "></span><a href="#binary-convolution"><b>1.2.1. </b>Binary Convolution</a></li><li><span class="title-icon "></span><a href="#implementation-in-pytorch_1"><b>1.2.2. </b>Implementation in PyTorch</a></li><li><span class="title-icon "></span><a href="#experimental-results"><b>1.2.3. </b>Experimental Results</a></li></ul></ul></ul></div><a href="#bwn-binary-weight-networks-and-xnor-net" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="bwn-binary-weight-networks-and-xnor-net"><a name="bwn-binary-weight-networks-and-xnor-net" class="anchor-navigation-ex-anchor" href="#bwn-binary-weight-networks-and-xnor-net"><i class="fa fa-link" aria-hidden="true"></i></a>1. BWN (Binary Weight Networks) and XNOR-Net</h1>
 <!-- toc --><div id="toc" class="toc">
 
 <ul>
@@ -655,7 +695,7 @@
 
 </div><!-- tocstop -->
 <p>Although deep neural networks have shown great potential in several application domains including computer vision and speech recognition, it is hard to implement DNN methods in hardware with the limitation of storage, compute capabilities and battery power. The authors in this paper proposed two efficient approximation to the neural network: binary weight networks (BWN) and XNOR-Networks. In binary weight networks, all the weights are approximated with binary values. While in XNOR-Networks, both the weights and the inputs to the convolutional layers and fully connected layers are approximated with binary values. The authors also attempted to evaluate their methods on large scale data sets like ImageNet, and proved that their methods outperform baseline for about 16.3%. <a href="https://github.com/allenai/XNOR-Net" target="_blank">Source code is available on GitHub</a>.</p>
-<h2 id="binary-weight-networks">Binary Weight Networks</h2>
+<h2 id="binary-weight-networks"><a name="binary-weight-networks" class="anchor-navigation-ex-anchor" href="#binary-weight-networks"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. Binary Weight Networks</h2>
 <p>Represent an <script type="math/tex; ">L</script>-layer DNN model with a triplet <script type="math/tex; "><\mathcal{I, W}, * ></script>. Each element <script type="math/tex; ">I=\mathcal{I}_{l(l=1,\cdots,L)}</script> in <script type="math/tex; ">\mathcal{I}</script> is the input tensor of the <script type="math/tex; ">l^{th}</script> layer, <script type="math/tex; ">W=\mathcal{W}_{lk(k=1,\cdots, K^l)}</script> is the <script type="math/tex; ">k^{th}</script> weight filter in the <script type="math/tex; ">l^{th}</script> layer of DNN. <script type="math/tex; ">*</script> represents convolutional operation with <script type="math/tex; ">I</script> and <script type="math/tex; ">W</script>. Note that the authors assume the convolutional layers in the network do not have bias terms. Thus the convolutional operation can be approximated by <script type="math/tex; ">I*W\approx(I\oplus B)\alpha</script>, where <script type="math/tex; ">\oplus</script> indicates a convolution without multiplication, <script type="math/tex; ">B=\mathcal{B}_{lk}</script> is a binary filter <script type="math/tex; ">\alpha=\mathcal{A}_{lk}</script> is an scale factor and <script type="math/tex; ">\mathcal{W}\approx\mathcal{A}_{lk}\mathcal{B}_{lk}</script>.</p>
 <p>The optimized objective function is shown as follows:
 <script type="math/tex; mode=display">
@@ -667,7 +707,7 @@ By solving the objective function mentioned above, we get:
 B^* = sign(W) \\ 
 \alpha^* = \frac{1}{n} \|W\|_{l1} \tag{2}
 </script></p>
-<h3 id="proof-1-solve-objective-function">Proof 1: solve objective function</h3>
+<h3 id="proof-1-solve-objective-function"><a name="proof-1-solve-objective-function" class="anchor-navigation-ex-anchor" href="#proof-1-solve-objective-function"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Proof 1: solve objective function</h3>
 <p><script type="math/tex; mode=display">
 J(B,\alpha) = \| W-\alpha B \|^2 = \alpha^2B^\intercal B - 2\alpha W^\intercal B + W^\intercal W \tag{3}
 </script></p>
@@ -685,14 +725,14 @@ Take the derivative of <script type="math/tex; ">J</script>, we have:
 \frac{\partial J}{\partial\alpha} = 2\alpha n-2W^\intercal B = 0 \\
 \alpha^* = \frac{W^\intercal B^*}{n} = \frac{W^\intercal sign(W)}{n} = \frac{\sum |W_i|}{n} = \frac{1}{n}\|W\|_{l1} \tag{6}
 </script></p>
-<h3 id="implementation-in-pytorch">Implementation in PyTorch</h3>
+<h3 id="implementation-in-pytorch"><a name="implementation-in-pytorch" class="anchor-navigation-ex-anchor" href="#implementation-in-pytorch"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Implementation in PyTorch</h3>
 <p><strong>Prepare: </strong> pre-train a DNN model (the authors did not mention that they use a pre-trained model or training from scratch)</p>
 <p><strong>Step 1, quantization:</strong> quantize weights of convolutional layers using Equation (2)</p>
 <p><strong>Step 2, training:</strong> apply standard forward and backward propagation to the network</p>
 <p><strong>Step 3, update parameters:</strong> update parameters with standard SGD</p>
 <p><strong>Repeat:</strong> repeat step 1 to step 3 until reach max iterations</p>
 <p>Note that weights in BWN are still floating-point as the author use <script type="math/tex; ">\alpha B</script> to approximate <script type="math/tex; ">W</script>. <script type="math/tex; ">\alpha</script> is the mean of weights in every convolutional layer. The main idea of the authors is computing the best approximation of weights. However, optimal approximation to weights do not means optimal approximation to the final outputs of the network. Thus this kinds of methods may still lead to high loss of accuracy.</p>
-<h2 id="xnor-networks">XNOR-Networks</h2>
+<h2 id="xnor-networks"><a name="xnor-networks" class="anchor-navigation-ex-anchor" href="#xnor-networks"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. XNOR-Networks</h2>
 <p>Based on the proposed binary weight networks, the authors further explore the method to binarize both weights and inputs. Convolutional operation consist of shift operation and dot product, and if the dot product can be expressed by binary operations, then convolution can be approximated using binary operations. The approximation of dot product between <script type="math/tex; ">X, W\in \mathbb{R}^n</script> can be expressed by <script type="math/tex; ">X^\intercal W\approx \beta H^\intercal \alpha B</script>, where <script type="math/tex; ">H,B\in \{+1,-1\}^n</script> and <script type="math/tex; ">\beta, \alpha\in \mathbb{R}^+</script>, then the optimized objective function is:
 <script type="math/tex; mode=display">
 \alpha^*,B^*, \beta^*, H^* = \arg\min_{\alpha, B,\beta, H} \| X\odot W - \beta\alpha H\odot B\|, \tag{7}
@@ -710,7 +750,7 @@ B^* = sign(W) \\
 \beta^*= \frac{1}{n}\|X\|_{l1} \\ 
 \alpha^*= \frac{1}{n}\|W\|_{l1} \tag{9}
 </script></p>
-<h3 id="binary-convolution">Binary Convolution</h3>
+<h3 id="binary-convolution"><a name="binary-convolution" class="anchor-navigation-ex-anchor" href="#binary-convolution"><i class="fa fa-link" aria-hidden="true"></i></a>1.2.1. Binary Convolution</h3>
 <p><img src="fig/Binary Convolution.png" alt="Binary Convolution"></p>
 <p>With the binary weights and binary inputs of convolutional layer, the convolution operations can be approximated using binary operations:
 <script type="math/tex; mode=display">
@@ -721,9 +761,9 @@ where <script type="math/tex; ">\circledast</script> indicates a convolutional o
 <p><img src="fig/Block of XNOR-Net.png" alt="Block of XNOR-Net"></p>
 <p><strong>Binary Gradient:</strong> similar to the binarization in the forward pass, the gradient in the backward pass can also be binarized. To preserve the maximum change of gradient, the authors use <script type="math/tex; ">\max_i(|g_i^{in}|)</script> as the scale factor.</p>
 <p><strong><script type="math/tex; ">k</script>-bit Quantization:</strong> the authors also mentioned that 1-bit quantization of weights can also be converted to k-bit quantization by using <script type="math/tex; ">q_k(x)=2(\frac{[(2^k-1)(\frac{x+1}{2})]}{2^k-1}-\frac{1}{2}</script> instead of <script type="math/tex; ">sign(x)</script> function, where <script type="math/tex; ">[\cdot]</script> indicates rounding operation and <script type="math/tex; ">x\in [-1,1]</script>. </p>
-<h3 id="implementation-in-pytorch">Implementation in PyTorch</h3>
+<h3 id="implementation-in-pytorch_1"><a name="implementation-in-pytorch_1" class="anchor-navigation-ex-anchor" href="#implementation-in-pytorch_1"><i class="fa fa-link" aria-hidden="true"></i></a>1.2.2. Implementation in PyTorch</h3>
 <p>The implementation of XNOR-Net is similar to those of BWN which including three steps: quantization, forward propagation and backward propagation.</p>
-<h3 id="experimental-results">Experimental Results</h3>
+<h3 id="experimental-results"><a name="experimental-results" class="anchor-navigation-ex-anchor" href="#experimental-results"><i class="fa fa-link" aria-hidden="true"></i></a>1.2.3. Experimental Results</h3>
 <p>In this paper, the authors conducted experiments on AlexNet and ResNet and validated the proposed methods using validation data set of ImageNet with single crop. The optimization method used in there experiments is ADAM as it can converge faster and have better performance with binary inputs. Experimental results are shown as follows:</p>
 <table>
 <thead>
@@ -829,7 +869,7 @@ where <script type="math/tex; ">\circledast</script> indicates a convolutional o
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"next":{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"path":"Network Quantization/Ternary Weight Networks.md","ref":"Network Quantization/Ternary Weight Networks.md","articles":[]},"previous":{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"path":"Network Quantization/Dynamic Network Surgery.md","ref":"Network Quantization/Dynamic Network Surgery.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Binary Weight Networks.md","mtime":"2017-06-21T16:20:29.862Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Binary Weight Networks","level":"1.2.3","depth":2,"next":{"title":"Ternary Weight Networks","level":"1.2.4","depth":2,"path":"Network Quantization/Ternary Weight Networks.md","ref":"Network Quantization/Ternary Weight Networks.md","articles":[]},"previous":{"title":"Dynamic Network Surgery","level":"1.2.2","depth":2,"path":"Network Quantization/Dynamic Network Surgery.md","ref":"Network Quantization/Dynamic Network Surgery.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"Network Quantization/Binary Weight Networks.md","mtime":"2017-06-21T16:20:29.862Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

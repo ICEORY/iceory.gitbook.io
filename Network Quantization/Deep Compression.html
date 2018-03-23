@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Deep Compression · GitBook</title>
+        <title>Deep Compression · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,10 +676,10 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="deep-compression">Deep Compression</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#deep-compression"><b>1. </b>Deep Compression</a></li><ul><li><span class="title-icon "></span><a href="#proposed-methods"><b>1.1. </b>Proposed Methods</a></li><li><span class="title-icon "></span><a href="#experimental-results"><b>1.2. </b>Experimental Results</a></li></ul></ul></div><a href="#deep-compression" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="deep-compression"><a name="deep-compression" class="anchor-navigation-ex-anchor" href="#deep-compression"><i class="fa fa-link" aria-hidden="true"></i></a>1. Deep Compression</h1>
 <p><img src="fig/Pipeline of Deep Compression.png" alt="Pipeline of Deep Compression"></p>
 <p>In this paper the authors introduces &quot;deep compression&quot; to compress model size of deep convolutional neural networks. The proposed method consists of three stage: pruning, trained quantization and <a href="https://en.wikipedia.org/wiki/Huffman_coding" target="_blank">Huffman coding</a>. The authors first prunes weights by learning the important connections. Second, quantize weights to enforce weight sharing. Third, apply Huffman coding to reduce storage further. </p>
-<h2 id="proposed-methods">Proposed Methods</h2>
+<h2 id="proposed-methods"><a name="proposed-methods" class="anchor-navigation-ex-anchor" href="#proposed-methods"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. Proposed Methods</h2>
 <p><a href="http://papers.nips.cc/paper/5784-learning-both-weights-and-connections-for-efficient-neural-network.pdf" target="_blank">Network Pruning</a>: First, learn connectivity by normal network training. Second, remove weights below threshold. Third,  retrain the network to learn the final weights for remaining sparse connections. After pruning, the sparse structure is stored using compress sparse row (CSR) or compress sparse column (CSC).</p>
 <p>Trained Quantization: use <script type="math/tex; ">k</script>-clusters with <script type="math/tex; ">b</script>-bits to represent <script type="math/tex; ">n</script>-connections of the network. The compression rate can be computed by:
 <script type="math/tex; mode=display">
@@ -655,7 +695,7 @@ As the initialization of k-means algorithm is quite important, the authors explo
 \frac{\partial \mathcal{L}}{\partial C_k} = \sum_{i,j}\frac{\partial \mathcal{L}}{\partial W_{i,j}}\frac{\partial W_{i,j}}{\partial C_k} = \sum_{i,j}\frac{\partial{\mathcal L}}{\partial W_{i,j}}\mathbb{1}(I_{i,j}=k), \tag{3}
 </script>
 where <script type="math/tex; ">\mathcal{L}</script> indicates loss, <script type="math/tex; ">W_{i,j}</script> indicates weight in the <script type="math/tex; ">i</script>-th column and <script type="math/tex; ">j</script>-th row, <script type="math/tex; ">C_k</script> indicates the <script type="math/tex; ">k</script>-th centroid of the layer and <script type="math/tex; ">\mathbb{1}(\cdot)</script> is an indicator function.</p>
-<h2 id="experimental-results">Experimental Results</h2>
+<h2 id="experimental-results"><a name="experimental-results" class="anchor-navigation-ex-anchor" href="#experimental-results"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. Experimental Results</h2>
 <p>The authors conducted experiments on two data sets: on MNIST, they used LeNet-300-100 and LeNet-5 while used AlexNet and VGG-16 on ImageNet to evaluate the proposed methods. Results on MINIST are summarized as follows:</p>
 <table>
 <thead>
@@ -769,7 +809,7 @@ where <script type="math/tex; ">\mathcal{L}</script> indicates loss, <script typ
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Deep Compression","level":"1.2.7","depth":2,"next":{"title":"Integer Arithmetic Only Inference","level":"1.2.8","depth":2,"path":"Network Quantization/Integer Arithmetic Only Inference.md","ref":"Network Quantization/Integer Arithmetic Only Inference.md","articles":[]},"previous":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"path":"Network Quantization/Binarized Neural Networks.md","ref":"Network Quantization/Binarized Neural Networks.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Deep Compression.md","mtime":"2017-10-20T09:26:26.718Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Deep Compression","level":"1.2.7","depth":2,"next":{"title":"Integer Arithmetic Only Inference","level":"1.2.8","depth":2,"path":"Network Quantization/Integer Arithmetic Only Inference.md","ref":"Network Quantization/Integer Arithmetic Only Inference.md","articles":[]},"previous":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"path":"Network Quantization/Binarized Neural Networks.md","ref":"Network Quantization/Binarized Neural Networks.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"Network Quantization/Deep Compression.md","mtime":"2017-10-20T09:26:26.718Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

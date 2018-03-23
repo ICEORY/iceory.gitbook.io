@@ -4,11 +4,11 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Binarized Neural Networks · GitBook</title>
+        <title>Binarized Neural Networks · iceory's blog</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
-        
+        <meta name="author" content="iceory (zhuangwei zhuang)">
         
         
     
@@ -34,6 +34,14 @@
             
                 
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-toggle-chapters/toggle.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
                 
             
                 
@@ -246,7 +254,7 @@
                 <a href="../notes.html">
             
                     
-                    Notes
+                    笔记
             
                 </a>
             
@@ -390,12 +398,12 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="../fun.md">
+        <li class="chapter " data-level="1.4" data-path="../fun.html">
             
-                <span>
+                <a href="../fun.html">
             
                     
-                    Fun
+                    作品展示
             
                 </a>
             
@@ -591,6 +599,38 @@
             
         </li>
     
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    [杂记]
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../Thinking/20171007.html">
+            
+                <a href="../Thinking/20171007.html">
+            
+                    
+                    2017.10.07
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
 
     
 
@@ -636,7 +676,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="bnn-binarized-neural-networks">BNN (Binarized Neural Networks)</h1>
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-anchor"></i><ul><li><span class="title-icon "></span><a href="#bnn-binarized-neural-networks"><b>1. </b>BNN (Binarized Neural Networks)</a></li><ul><li><span class="title-icon "></span><a href="#proposed-method"><b>1.1. </b>Proposed Method</a></li><ul><li><span class="title-icon "></span><a href="#binarization-strategies"><b>1.1.1. </b>Binarization Strategies</a></li><li><span class="title-icon "></span><a href="#gradient"><b>1.1.2. </b>Gradient</a></li><li><span class="title-icon "></span><a href="#shift-based-batch-normalization"><b>1.1.3. </b>Shift-based Batch Normalization</a></li><li><span class="title-icon "></span><a href="#shift-based-adamax"><b>1.1.4. </b>Shift-based AdaMax</a></li><li><span class="title-icon "></span><a href="#binarized-input"><b>1.1.5. </b>Binarized Input</a></li></ul><li><span class="title-icon "></span><a href="#training-method"><b>1.2. </b>Training Method</a></li><li><span class="title-icon "></span><a href="#experimental-results"><b>1.3. </b>Experimental Results</a></li></ul><li><span class="title-icon "></span><a href="#extension-of-bnn"><b>2. </b>Extension of BNN</a></li><ul><li><span class="title-icon "></span><a href="#experimental-results_1"><b>2.1. </b>Experimental Results</a></li></ul></ul></div><a href="#bnn-binarized-neural-networks" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="bnn-binarized-neural-networks"><a name="bnn-binarized-neural-networks" class="anchor-navigation-ex-anchor" href="#bnn-binarized-neural-networks"><i class="fa fa-link" aria-hidden="true"></i></a>1. BNN (Binarized Neural Networks)</h1>
 <!-- toc --><div id="toc" class="toc">
 
 <ul>
@@ -658,8 +698,8 @@
 
 </div><!-- tocstop -->
 <p>In this paper, the authors proposed a method to train Binarized Neural Networks (BNNs), a network with binary weights and activations. The proposed BNNs drastically reduce the memory consumption (size and number of accesses) and have higher power-efficiency as it replaces most arithmetic operations with bit-wise operations. The code implemented in <a href="https://github.com/MatthieuCourbariaux/BinaryNet" target="_blank">Theano</a> and <a href="https://github.com/itayhubara/BinaryNet" target="_blank">Torch</a> is available on GitHub.</p>
-<h2 id="proposed-method">Proposed Method</h2>
-<h3 id="binarization-strategies">Binarization Strategies</h3>
+<h2 id="proposed-method"><a name="proposed-method" class="anchor-navigation-ex-anchor" href="#proposed-method"><i class="fa fa-link" aria-hidden="true"></i></a>1.1. Proposed Method</h2>
+<h3 id="binarization-strategies"><a name="binarization-strategies" class="anchor-navigation-ex-anchor" href="#binarization-strategies"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.1. Binarization Strategies</h3>
 <p>Constrain both weights and activation to either +1 or -1 has higher efficiency in hardware. The authors discussed two binarization functions including deterministic and stochastic. Formulation of deterministic binarization function is:
 <script type="math/tex; mode=display">
 x^b = sign(x)=
@@ -682,7 +722,7 @@ x^b =
 \sigma(x) = clip(\frac{x+1}{2},0,1) = \max(0,\min(1,\frac{x+1}{2})) \tag{3}
 </script></p>
 <p>The authors suggested that the stochastic binarization is harder to implement as it requires the hardware to generate random bits, though it is more appealing than the deterministic binarization, so they preferred to use the deterministic binarization function in their experiments.</p>
-<h3 id="gradient">Gradient</h3>
+<h3 id="gradient"><a name="gradient" class="anchor-navigation-ex-anchor" href="#gradient"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.2. Gradient</h3>
 <p>Real-valued gradients are computed and accumulated in real-valued variables in this paper, as high precision is required for SGD. Previous work shows that using &quot;straight-through estimator&quot; can help the network training faster, the authors used straight-through estimator of <script type="math/tex; ">\frac{\partial C}{\partial r}</script> simplified as:
 <script type="math/tex; mode=display">
 g_r = g_q1_{|r|\le1} \tag{4}
@@ -692,7 +732,7 @@ which cancels the gradient when <script type="math/tex; ">r</script> is too larg
 \mathrm{Htanh}(x)=clip(x,-1,1)=\max(-1,\min(1,x)) \tag{5}
 </script>
 The real-valued weights <script type="math/tex; ">w^r</script> first projected to <script type="math/tex; ">[-1,+1]</script> and then quantized to binarized weights <script type="math/tex; ">w^b</script> using <script type="math/tex; ">w^b=sign(w^r)</script>. </p>
-<h3 id="shift-based-batch-normalization">Shift-based Batch Normalization</h3>
+<h3 id="shift-based-batch-normalization"><a name="shift-based-batch-normalization" class="anchor-navigation-ex-anchor" href="#shift-based-batch-normalization"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.3. Shift-based Batch Normalization</h3>
 <p>The authors proposed a shift-based batch normalization (SBN) to achieve the results of BN so as to speed up computation of batch normalization. The algorithm is shown as follows:
 <script type="math/tex; mode=display">
 \mu_B \gets \frac{1}{m}\sum_{i=1}^m x_i \\
@@ -702,7 +742,7 @@ C(x_i) \gets (x_i-\mu_B) \\
 y_i \gets AP2(\gamma) \ll \gg \hat{x_i} \tag{6}
 </script>
 Where AP2 is the approximate power-of-2, <script type="math/tex; ">\ll\gg</script> indicates both left and right binary shift operations.</p>
-<h3 id="shift-based-adamax">Shift-based AdaMax</h3>
+<h3 id="shift-based-adamax"><a name="shift-based-adamax" class="anchor-navigation-ex-anchor" href="#shift-based-adamax"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.4. Shift-based AdaMax</h3>
 <p>Since ADAM requires many multiplications, the authors suggested to use shift-based AdaMax which is shown as follows:
 <script type="math/tex; mode=display">
 m_t \gets \beta_1 \cdot m_{t-1} + (1-\beta_1) \cdot g_t \\
@@ -710,19 +750,19 @@ v_t \gets \max(\beta_2 \cdot v_{t-1}, g|t|) \\
 \theta_t \gets \theta_{t-1} - (\alpha \ll \gg (1-\beta_1)) \cdot \hat{m} \ll \gg v_t^{-1} \tag{7}
 </script>
 Where <script type="math/tex; ">g_t^2</script> indicates the element-wise square <script type="math/tex; ">g_t\circ g_t</script>. Good default setting are <script type="math/tex; ">\alpha=2^{-10},1-\beta_1=2^{-3},1-\beta_2=2^{-10}</script>. All operations on vectors are element-wise and <script type="math/tex; ">\beta_1^t</script>, <script type="math/tex; ">\beta_2^t</script> denote <script type="math/tex; ">\beta_1</script> and <script type="math/tex; ">\beta_2</script> to the power <script type="math/tex; ">t</script>.</p>
-<h3 id="binarized-input">Binarized Input</h3>
+<h3 id="binarized-input"><a name="binarized-input" class="anchor-navigation-ex-anchor" href="#binarized-input"><i class="fa fa-link" aria-hidden="true"></i></a>1.1.5. Binarized Input</h3>
 <p>Since the input representation has much fewer channels than the internal representations in computer vision and it is easy to convert continuous-valued inputs to fixed point numbers, the authors suggested to compute output of first layer by:
 <script type="math/tex; mode=display">
 s=x \cdot w^b \\
 s=\sum_{n=1}^8 2^{n-1}(x^n \cdot w^b) \tag{8}
 </script>
 where <script type="math/tex; ">x</script> is a vector of 1024 8-bit inputs, <script type="math/tex; ">x_1^8</script> is the most significant bit of the first input, <script type="math/tex; ">w^b</script> is a vector of 1024 1-bit weights and <script type="math/tex; ">s</script> is the resulting weighted sum.</p>
-<h2 id="training-method">Training Method</h2>
+<h2 id="training-method"><a name="training-method" class="anchor-navigation-ex-anchor" href="#training-method"><i class="fa fa-link" aria-hidden="true"></i></a>1.2. Training Method</h2>
 <p><strong>Step 1, forward:</strong> binarized weights and apply SBN</p>
 <p><strong>Step 2, backward:</strong> compute real-valued gradient <script type="math/tex; ">g_a</script> with constraint descripted in Equation (4), and compute gradient of weights </p>
 <p><strong>Step 3, update:</strong> update weights with constraint descripted in Equation (4)</p>
 <p><strong>Repeating:</strong> repeating step 1 to step 3, until finish the training.</p>
-<h2 id="experimental-results">Experimental Results</h2>
+<h2 id="experimental-results"><a name="experimental-results" class="anchor-navigation-ex-anchor" href="#experimental-results"><i class="fa fa-link" aria-hidden="true"></i></a>1.3. Experimental Results</h2>
 <p>The authors evaluated their method on three data sets including MNIST, SVHN and CIFAR-10, results are shown as follows:</p>
 <table>
 <thead>
@@ -748,7 +788,7 @@ where <script type="math/tex; ">x</script> is a vector of 1024 8-bit inputs, <sc
 </tr>
 </tbody>
 </table>
-<h1 id="extension-of-bnn">Extension of BNN</h1>
+<h1 id="extension-of-bnn"><a name="extension-of-bnn" class="anchor-navigation-ex-anchor" href="#extension-of-bnn"><i class="fa fa-link" aria-hidden="true"></i></a>2. Extension of BNN</h1>
 <p>Following the work of BNN, the authors proposed a <a href="https://www.ganghua.org/publication/AAAI17.pdf" target="_blank">training method</a> to improve performance of BNN in four folds: (1) using low learning rate (the authors suggested to use the learning rate of 1e-4); (2) using PReLU instead of ReLU to absorb the scaling factor for weights to the activation function; (3) introducing a regularization term to the loss function to encourage the weights to be bipolar; (4) using scale layer in fully connected layer to bring the outputs to normal.</p>
 <p>The regularization term introduced in this paper is formulated by:
 <script type="math/tex; mode=display">
@@ -762,7 +802,7 @@ For <script type="math/tex; ">i=1</script>, <script type="math/tex; ">H_{l,1}</s
 <script type="math/tex; mode=display">
 O_l = W_l \cdot A_{l-1} \approx \sum_{i=1}^m (\alpha_{l-1,i}xnor-popcnt(B_l, H_{l-1,i})) \tag{11}
 </script></p>
-<h2 id="experimental-results">Experimental Results</h2>
+<h2 id="experimental-results_1"><a name="experimental-results_1" class="anchor-navigation-ex-anchor" href="#experimental-results_1"><i class="fa fa-link" aria-hidden="true"></i></a>2.1. Experimental Results</h2>
 <p>The authors conducted experiments on ImageNet with AlexNet and NIN, the results are shown as follows:</p>
 <table>
 <thead>
@@ -855,7 +895,7 @@ O_l = W_l \cdot A_{l-1} \approx \sum_{i=1}^m (\alpha_{l-1,i}xnor-popcnt(B_l, H_{
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"next":{"title":"Deep Compression","level":"1.2.7","depth":2,"path":"Network Quantization/Deep Compression.md","ref":"Network Quantization/Deep Compression.md","articles":[]},"previous":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid"],"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"toggle-chapters":{}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"Network Quantization/Binarized Neural Networks.md","mtime":"2017-10-15T03:42:42.907Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-16T07:40:29.804Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Binarized Neural Networks","level":"1.2.6","depth":2,"next":{"title":"Deep Compression","level":"1.2.7","depth":2,"path":"Network Quantization/Deep Compression.md","ref":"Network Quantization/Deep Compression.md","articles":[]},"previous":{"title":"Trained Ternary Quantization","level":"1.2.5","depth":2,"path":"Network Quantization/Trained Ternary Quantization.md","ref":"Network Quantization/Trained Ternary Quantization.md","articles":[]},"dir":"ltr"},"config":{"plugins":["mathjax","splitter","back-to-top-button","etoc","-search","-lunr","search-pro","toggle-chapters","mermaid","anchors","anchor-navigation-ex"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"etoc":{"mindepth":3,"maxdepth":4,"header":1,"h2lb":3,"notoc":false},"splitter":{},"search-pro":{},"mermaid":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"printLog":false,"showLevel":true},"back-to-top-button":{},"mathjax":{"forceSVG":false,"version":"2.6-latest"},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{},"toggle-chapters":{}},"theme":"default","author":"iceory (zhuangwei zhuang)","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"iceory's blog","gitbook":"*"},"file":{"path":"Network Quantization/Binarized Neural Networks.md","mtime":"2017-10-15T03:42:42.907Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-03-23T13:51:26.378Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
